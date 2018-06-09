@@ -8,21 +8,50 @@
 <h:head>
     Kategorie i postacie
 </h:head>
-<h:body>
-    <f:view>
+<f:view>
+    <h:body>
         <h:form>
             <h:panelGrid columns="2">
                 <h:panelGroup>
                     <ul>
-                        <ui:repeat value="#{categoriesController.categories}" var="category">
+                        <ui:repeat value="#{categoriesController.getCategoryTypes()}" var="categoryType">
                             <li>
-                                <h:outputLabel value="#{category.categoryType}"/>
+                                <h:outputLabel value="#{categoryType.name}"/>
                                 <ul>
-                                    <ui:repeat value="#{category.intParameters}" var="parameter">
+                                    <ui:repeat value="#{categoriesController.getCategoriesByType(categoryType.id)}" var="category">
                                             <li>
-                                            <h:outputLabel value="#{parameter.label}"/>-
-                                            <h:outputLabel value="#{parameter.value}"/>
+                                                <ui:repeat value="#{categoriesController.getParametersByCategoryId(category.id)}" var="parameter">
+                                                    <h:panelGroup rendered="#{not empty parameter.value}">
+                                                        <li>
+                                                            <h:outputLabel value="#{parameter.label}"/> -
+                                                            <h:outputLabel value="#{parameter.value}"/>
+                                                        </li>
+                                                    </h:panelGroup>
+                                                </ui:repeat>
                                             </li>
+                                        <ul>
+                                            <ui:repeat value="#{categoriesController.getElementsByCategoryId(category.id)}" var="element">
+                                                <li>
+                                                    <h:outputLabel value="#{element.typeId.elementType}"/>
+                                                    <ul>
+                                                        <ui:repeat value="#{categoriesController.getIntParametersByElementId(element.id)}" var="intParameter">
+                                                            <li>
+                                                                <h:outputLabel value="#{intParameter.label}"/> -
+                                                                <h:outputLabel value="#{intParameter.value}"/>
+                                                            </li>
+                                                        </ui:repeat>
+                                                    </ul>
+                                                    <ul>
+                                                        <ui:repeat value="#{categoriesController.getStringParametersByElementId(element.id)}" var="stringParameter">
+                                                            <li>
+                                                                <h:outputLabel value="#{stringParameter.label}"/>
+                                                                <h:outputLabel value="#{stringParameter.value}"/>
+                                                            </li>
+                                                        </ui:repeat>
+                                                    </ul>
+                                                </li>
+                                            </ui:repeat>
+                                        </ul>
                                     </ui:repeat>
                                 </ul>
                             </li>
@@ -35,6 +64,7 @@
                 </h:panelGroup>
             </h:panelGrid>
         </h:form>
-    </f:view>
-</h:body>
+    </h:body>
+</f:view>
+
 </html>

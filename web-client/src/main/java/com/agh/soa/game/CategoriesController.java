@@ -1,6 +1,6 @@
 package com.agh.soa.game;
 
-import com.agh.soa.Category;
+import com.agh.soa.*;
 import remote.RemoteCategoryService;
 
 import javax.annotation.ManagedBean;
@@ -23,7 +23,6 @@ public class CategoriesController {
 
     @PostConstruct
     public void initialize() {
-        categories = remoteCategoryService.getCategories();
     }
 
 
@@ -42,13 +41,22 @@ public class CategoriesController {
         return categories;
     }
 
-    public List getParametersByCategory(int id) {
-        return remoteCategoryService.getParameterByCategoryId(id);
-    }
-
 //    public String getLabel() {
 //        return category != null ? remoteCategoryServiceg(category.getId()) : "";
 //    }
+    public List<Element> getElementsByCategoryId(int id) {
+        return remoteCategoryService.getElementsByCategoryId(id);
+    }
+
+    public List<IntParameter> getParametersByCategoryId(int id) {
+        return remoteCategoryService.getParametersByCategoryId(id);
+    }
+
+    public List<IntParameter> getIntParametersByElementId(int id) { return remoteCategoryService.getIntParametersByElementId(id); }
+    public List<StringParameter> getStringParametersByElementId(int id) { return remoteCategoryService.getStringParametersByElementId(id); }
+
+    public List<CategoryType> getCategoryTypes() { return remoteCategoryService.getCategoryTypes(); }
+    public List<Category> getCategoriesByType(int typeId) { return remoteCategoryService.getCategoriesByType(typeId); }
 
     public int getValue() {
         return value;

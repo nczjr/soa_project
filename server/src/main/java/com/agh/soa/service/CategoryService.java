@@ -1,7 +1,6 @@
 package com.agh.soa.service;
 
-import com.agh.soa.Category;
-import com.agh.soa.Element;
+import com.agh.soa.*;
 import com.agh.soa.dao.CategoryDAO;
 import com.agh.soa.dao.ElementDAO;
 import com.agh.soa.dao.IntParametersDAO;
@@ -26,20 +25,27 @@ public class CategoryService implements RemoteCategoryService, Serializable {
 
     @Inject
     private IntParametersDAO intParametersDAO;
+    @Inject
+    private EntityService entityService;
 
 
-    public List<Category> getCategories() {
-        return categoryDAO.findAll();
+    public List<CategoryType> getCategoryTypes() { return  categoryDAO.findCategoryTypes(); }
+
+    public List<Category> getCategoriesByType(int typeId) {
+        return categoryDAO.findByCategoryType(typeId);
     }
 
     public List<Element> getElements() {
         return elementDAO.findAll();
     }
 
-    public List getParameterByCategoryId(int id) {
-        return intParametersDAO.findByCategoryId(id);
-    }
+    public List<IntParameter> getParametersByCategoryId(int id) { return entityService.getParametersByCategoryId(id); }
 
+    public List<Element> getElementsByCategoryId(int id) { return entityService.getElementsByCategoryId(id); }
+
+    public List<IntParameter> getIntParametersByElementId(int id) { return intParametersDAO.findIntParametersByElementId(id); }
+
+    public List<StringParameter> getStringParametersByElementId(int id) { return intParametersDAO.findStringParametersByElementId(id); }
 
 
 }

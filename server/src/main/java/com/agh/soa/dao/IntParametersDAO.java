@@ -40,4 +40,16 @@ public class IntParametersDAO {
         query.setParameter("id", id);
         return (String) query.getSingleResult();
     }
+
+    public List findIntParametersByElementId(int id) {
+        Query query = entityManager.createQuery("FROM IntParameter p where p.elementId=:id");
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
+
+    public List findStringParametersByElementId(int id) {
+        Query query = entityManager.createQuery("FROM StringParameter p where p.elementId=:id");
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
 }

@@ -25,4 +25,10 @@ public class ElementDAO {
         Query query = entityManager.createQuery("FROM Element ", Element.class);
         return query.getResultList();
     }
+
+    public List<Element> findByCategoryId(int id) {
+        Query query = entityManager.createQuery("from  Element e where e.categories.id=:id", Element.class);
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
 }

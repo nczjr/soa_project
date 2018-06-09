@@ -1,7 +1,11 @@
 package com.agh.soa;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -20,6 +24,13 @@ public class Element implements Serializable {
     @JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Category categories;
 
+    @OneToMany(mappedBy = "elementByElementId")
+    private Collection<IntParameter> intParameters;
+
+    @OneToMany(mappedBy = "elementByElementId")
+    private Collection<StringParameter> stringParameters;
+
+
 
     public int getId() {
         return id;
@@ -27,6 +38,38 @@ public class Element implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Collection<IntParameter> getIntParameters() {
+        return intParameters;
+    }
+
+    public void setIntParameters(Collection<IntParameter> intParameters) {
+        this.intParameters = intParameters;
+    }
+
+    public Collection<StringParameter> getStringParameters() {
+        return stringParameters;
+    }
+
+    public void setStringParameters(Collection<StringParameter> stringParameters) {
+        this.stringParameters = stringParameters;
+    }
+
+    public ElementType getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(ElementType typeId) {
+        this.typeId = typeId;
+    }
+
+    public Category getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Category categories) {
+        this.categories = categories;
     }
 
     @Override

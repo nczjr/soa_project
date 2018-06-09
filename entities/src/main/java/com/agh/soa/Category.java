@@ -9,7 +9,7 @@ import java.util.Objects;
 @Table(name = "categories", schema = "projekt_soa", catalog = "")
 public class Category implements Serializable {
     private int id;
-    private String categoryType;
+    private int typeId;
     private Collection<IntParameter> intParameters;
 
     @Id
@@ -23,13 +23,13 @@ public class Category implements Serializable {
     }
 
     @Basic
-    @Column(name = "category_type")
-    public String getCategoryType() {
-        return categoryType;
+    @Column(name = "type_id")
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setCategoryType(String categoryType) {
-        this.categoryType = categoryType;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     @Override
@@ -38,17 +38,17 @@ public class Category implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
         return id == category.id &&
-                Objects.equals(categoryType, category.categoryType);
+                Objects.equals(typeId, category.typeId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, categoryType);
+        return Objects.hash(id, typeId);
     }
 
 
-    @OneToMany(mappedBy = "categoriesByCategoryId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "categoriesByCategoryId")
     public Collection<IntParameter> getIntParameters() {
         return intParameters;
     }
@@ -57,11 +57,14 @@ public class Category implements Serializable {
         this.intParameters = intParameters;
     }
 
+
+
+
     @Override
     public String toString() {
         return "com.agh.soa.Category{" +
                 "id=" + id +
-                ", categoryType='" + categoryType +
+                ", categoryType='" + typeId +
                 '}';
     }
 }
