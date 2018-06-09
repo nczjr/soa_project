@@ -1,11 +1,13 @@
 package com.agh.soa.dao;
 
-import com.agh.soa.entity.Category;
-import com.agh.soa.entity.IntParameter;
+import com.agh.soa.Category;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.List;
 

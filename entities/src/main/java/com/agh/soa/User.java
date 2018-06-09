@@ -1,11 +1,12 @@
-package com.agh.soa.entity;
+package com.agh.soa;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "users", schema = "projekt_soa", catalog = "")
-public class User {
+public class User implements Serializable {
     private int id;
     private String username;
     private String passwd;

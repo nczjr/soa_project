@@ -1,12 +1,13 @@
-package com.agh.soa.entity;
+package com.agh.soa;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "categories", schema = "projekt_soa", catalog = "")
-public class Category {
+public class Category implements Serializable {
     private int id;
     private String categoryType;
     private Collection<IntParameter> intParameters;
@@ -46,7 +47,8 @@ public class Category {
         return Objects.hash(id, categoryType);
     }
 
-    @OneToMany(mappedBy = "categoriesByCategoryId")
+
+    @OneToMany(mappedBy = "categoriesByCategoryId", fetch = FetchType.EAGER)
     public Collection<IntParameter> getIntParameters() {
         return intParameters;
     }
@@ -57,7 +59,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
+        return "com.agh.soa.Category{" +
                 "id=" + id +
                 ", categoryType='" + categoryType +
                 '}';

@@ -14,11 +14,11 @@
             <h:panelGrid columns="2">
                 <h:panelGroup>
                     <ul>
-                        <ui:repeat value="#{categoryDAO.findAll()}" var="category">
+                        <ui:repeat value="#{categoriesController.categories}" var="category">
                             <li>
                                 <h:outputLabel value="#{category.categoryType}"/>
                                 <ul>
-                                    <ui:repeat value="#{intParametersDAO.findByCategoryId(category.id)}" var="parameter">
+                                    <ui:repeat value="#{category.intParameters}" var="parameter">
                                             <li>
                                             <h:outputLabel value="#{parameter.label}"/>-
                                             <h:outputLabel value="#{parameter.value}"/>

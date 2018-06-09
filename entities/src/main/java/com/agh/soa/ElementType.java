@@ -1,20 +1,22 @@
-package com.agh.soa.entity;
+package com.agh.soa;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "Element_types", schema = "projekt_soa", catalog = "")
-public class ElementType {
-    private int id;
-    private String elementType;
-    private Collection<IntParameter> intParameters;
-    private Collection<StringParameter> stringParameters;
+public class ElementType implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    private int id;
+
+    @Basic
+    @Column(name = "element_type")
+    private String elementType;
+
+   public int getId() {
         return id;
     }
 
@@ -22,8 +24,6 @@ public class ElementType {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "element_type")
     public String getElementType() {
         return elementType;
     }

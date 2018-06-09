@@ -12,13 +12,13 @@
     <h:body>
         <h:form>
             <h:outputLabel value="Wybierz kategorię"/>
-            <h:selectOneMenu value="#{categoryController.category}"
+            <h:selectOneMenu value="#{categoriesController.category}"
                              onchange="submit();"
-                             valueChangeListener="#{categoryController.updateCategory}">
-                <f:selectItems value="#{categoryController.categories}"/>
+                             valueChangeListener="#{categoriesController.updateCategory}">
+                <f:selectItems value="#{categoriesController.categories}"/>
             </h:selectOneMenu>
-            <h:outputLabel id="paramLabel" value="#{categoryController.label}"/>
-            <h:inputText value="#{categoryController.value}"/>
+            <h:outputLabel id="paramLabel" value="#{categoriesController.label}"/>
+            <h:inputText value="#{categoriesController.value}"/>
         </h:form>
     </h:body>
 </f:view>

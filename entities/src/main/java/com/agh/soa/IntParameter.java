@@ -1,6 +1,7 @@
-package com.agh.soa.entity;
+package com.agh.soa;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -9,19 +10,44 @@ import java.util.Objects;
         name="findByCategoryId",
         query="SELECT OBJECT(p) FROM IntParameter p where p.categoryId=:id and p.value is not null"
 )
-public class IntParameter {
+public class IntParameter implements Serializable {
+
+    @Id
+    @Column(name = "id")
     private int id;
+
+    @Basic
+    @Column(name = "label")
     private String label;
+
+    @Basic
+    @Column(name = "value")
     private Integer value;
+
+    @Basic
+    @Column(name = "category_id")
     private Integer categoryId;
+
+    @Basic
+    @Column(name = "element_id")
     private Integer elementId;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Category categoriesByCategoryId;
-    private Elements elementsByElementId;
+
+    @ManyToOne
+    @JoinColumn(name = "element_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Element elementByElementId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     private User usersByUserId;
-    private int userId;
 
     @Basic
     @Column(name = "user_id")
+    private int userId;
+
     public Integer getUserId() {
         return userId;
     }
@@ -30,8 +56,6 @@ public class IntParameter {
         this.userId = userId;
     }
 
-    @Id
-    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -40,8 +64,6 @@ public class IntParameter {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "label")
     public String getLabel() {
         return label;
     }
@@ -50,8 +72,6 @@ public class IntParameter {
         this.label = label;
     }
 
-    @Basic
-    @Column(name = "value")
     public Integer getValue() {
         return value;
     }
@@ -60,9 +80,7 @@ public class IntParameter {
         this.value = value;
     }
 
-    @Basic
-    @Column(name = "category_id")
-    public Integer getCategoryId() {
+   public Integer getCategoryId() {
         return categoryId;
     }
 
@@ -70,14 +88,36 @@ public class IntParameter {
         this.categoryId = categoryId;
     }
 
-    @Basic
-    @Column(name = "element_id")
     public Integer getElementId() {
         return elementId;
     }
 
     public void setElementId(Integer elementId) {
         this.elementId = elementId;
+    }
+
+    public Category getCategoriesByCategoryId() {
+        return categoriesByCategoryId;
+    }
+
+    public void setCategoriesByCategoryId(Category categoriesByCategoryId) {
+        this.categoriesByCategoryId = categoriesByCategoryId;
+    }
+
+    public Element getElementByElementId() {
+        return elementByElementId;
+    }
+
+    public void setElementByElementId(Element elementByElementId) {
+        this.elementByElementId = elementByElementId;
+    }
+
+    public User getUsersByUserId() {
+        return usersByUserId;
+    }
+
+    public void setUsersByUserId(User usersByUserId) {
+        this.usersByUserId = usersByUserId;
     }
 
     @Override
@@ -98,33 +138,4 @@ public class IntParameter {
         return Objects.hash(id, label, value, categoryId, elementId);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
-    public Category getCategoriesByCategoryId() {
-        return categoriesByCategoryId;
-    }
-
-    public void setCategoriesByCategoryId(Category categoriesByCategoryId) {
-        this.categoriesByCategoryId = categoriesByCategoryId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "element_id", referencedColumnName = "id", insertable = false, updatable = false)
-    public Elements getElementsByElementId() {
-        return elementsByElementId;
-    }
-
-    public void setElementsByElementId(Elements elementsByElementId) {
-        this.elementsByElementId = elementsByElementId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
-    public User getUsersByUserId() {
-        return usersByUserId;
-    }
-
-    public void setUsersByUserId(User usersByUserId) {
-        this.usersByUserId = usersByUserId;
-    }
 }

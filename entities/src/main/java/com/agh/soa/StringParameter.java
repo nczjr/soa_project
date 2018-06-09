@@ -1,17 +1,18 @@
-package com.agh.soa.entity;
+package com.agh.soa;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "string_parameters", schema = "projekt_soa", catalog = "")
-public class StringParameter {
+public class StringParameter implements Serializable {
     private int id;
     private String label;
     private String value;
     private Integer elementId;
     private Integer userId;
-    private Elements elementsByElementId;
+    private Element elementByElementId;
     private User usersByUserId;
 
     @Id
@@ -84,12 +85,12 @@ public class StringParameter {
 
     @ManyToOne
     @JoinColumn(name = "element_id", referencedColumnName = "id", insertable = false, updatable = false)
-    public Elements getElementsByElementId() {
-        return elementsByElementId;
+    public Element getElementByElementId() {
+        return elementByElementId;
     }
 
-    public void setElementsByElementId(Elements elementsByElementId) {
-        this.elementsByElementId = elementsByElementId;
+    public void setElementByElementId(Element elementByElementId) {
+        this.elementByElementId = elementByElementId;
     }
 
     @ManyToOne

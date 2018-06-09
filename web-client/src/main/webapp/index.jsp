@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: User
+  com.agh.soa.User: com.agh.soa.User
   Date: 2018-06-04
   Time: 17:42
   To change this template use File | Settings | File Templates.

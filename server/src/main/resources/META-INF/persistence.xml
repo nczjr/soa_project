@@ -2,18 +2,14 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
 
     <persistence-unit name="Projekt">
-        <class>com.agh.soa.entity.Category</class>
-        <class>com.agh.soa.entity.CategoriesValues</class>
-        <class>com.agh.soa.entity.ElementType</class>
-        <class>com.agh.soa.entity.IntParameter</class>
-        <class>com.agh.soa.entity.StringParameter</class>
-        <class>com.agh.soa.entity.Role</class>
-        <class>com.agh.soa.entity.User</class>
-        <class>com.agh.soa.entity.Category</class>
-        <class>com.agh.soa.entity.Users</class>
-        <class>com.agh.soa.entity.Elements</class>
-        <class>com.agh.soa.entity.StringParameters</class>
-        <class>com.agh.soa.entity.Categories</class>
+        <class>com.agh.soa.Category</class>
+        <class>com.agh.soa.ElementType</class>
+        <class>com.agh.soa.IntParameter</class>
+        <class>com.agh.soa.StringParameter</class>
+        <class>com.agh.soa.Role</class>
+        <class>com.agh.soa.User</class>
+        <class>com.agh.soa.Category</class>
+        <class>com.agh.soa.Element</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projekt_soa"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

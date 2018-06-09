@@ -1,7 +1,8 @@
 package com.agh.soa.dao;
 
-import com.agh.soa.entity.Category;
-import com.agh.soa.entity.IntParameter;
+
+import com.agh.soa.Category;
+import com.agh.soa.IntParameter;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
