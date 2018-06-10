@@ -18,10 +18,12 @@
                 <p:ajax event="itemSelect" listener="#{createController.updateLabel()}" update="paramLabel"/>
             </p:selectOneMenu>
             <br/>
-            <p:outputLabel id="paramLabel" value="#{createController.label}"/>
-            <p:inputText required="true" value="#{createController.value}" rendered="#{createController.value ne ''}"/>
+            <h:panelGroup id="paramLabel" >
+            <p:outputLabel value="#{createController.label}"/>
+            <p:inputText value="#{createController.value}"/>
+            </h:panelGroup>
             <br/>
-            <p:commandButton id="addCategory" value="add" action="#{createController.createCategoryObject()}" process="@this"/>
+            <p:commandButton id="addCategory" value="add" action="#{createController.createCategoryObject()}" process="@form"/>
         </h:form>
         <h:form>
             <p:outputLabel value="Add element:"/><br/>

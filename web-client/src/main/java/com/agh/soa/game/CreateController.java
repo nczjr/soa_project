@@ -36,7 +36,7 @@ public class CreateController implements Serializable {
 
     private String label;
 
-    private int value;
+    private Integer value;
 
     @PostConstruct
     public void initialize() {
@@ -97,12 +97,11 @@ public class CreateController implements Serializable {
 
     public void createCategoryObject() {
         IntParameter parameter = new IntParameter();
+        parameter.setCategoriesByCategoryId(category);
         parameter.setLabel(label);
         parameter.setValue(value);
         // @todo
         parameter.setUserId(1);
-        category.setTypeId(categoryType.getId());
-        parameter.setCategoriesByCategoryId(category);
         remoteCategoryService.createCategoryByParameter(parameter);
     }
 
@@ -130,11 +129,11 @@ public class CreateController implements Serializable {
         remoteCategoryService.createElementByParameters(parameters, stringParameter);
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
