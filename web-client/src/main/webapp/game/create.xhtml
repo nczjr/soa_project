@@ -10,8 +10,20 @@
 <h:head></h:head>
 <f:view>
     <h:body>
+        <p:commandLink value="Katalog" action="index.xhtml?faces-redirect=true"/>
+            <br/>
+            <p:outputLabel for="@next" value="Create: " />
+            <h:selectBooleanCheckbox value="#{createController.create}" >
+                <p:ajax immediate="true" listener="#{createController.setCreateToOpposite}" action="change" update="container" />
+            </h:selectBooleanCheckbox>
+            <br/>
+            <p:outputLabel for="@next" value="Category : " />
+            <h:selectBooleanCheckbox  value="#{createController.categoryObject}">
+                <p:ajax immediate="true"  listener="#{createController.setCategoryObjectToOpposite}" action="change" update="container" />
+            </h:selectBooleanCheckbox>
+        <br/>
         <h:panelGroup id="container">
-            <h:panelGroup>
+            <h:panelGroup rendered="#{createController.create and createController.categoryObject}">
             <h:form>
                 <p:outputLabel value="Add category:"/><br/>
                 <p:selectOneMenu value="#{createController.categoryType}"
@@ -28,7 +40,7 @@
                 <p:commandButton id="addCategory" value="add" action="#{createController.createCategoryObject()}" process="@form"/>
             </h:form>
             </h:panelGroup>
-            <h:panelGroup>
+            <h:panelGroup rendered="#{createController.create and !createController.categoryObject}">
             <h:form>
                 <p:outputLabel value="Add element:"/><br/>
                 <p:outputLabel value="Select category type:"/><br/>
@@ -61,7 +73,7 @@
                 <br/>
             </h:form>
             </h:panelGroup>
-            <h:panelGroup>
+            <h:panelGroup rendered="#{!createController.create and createController.categoryObject}">
                 <h:form>
                     <p:outputLabel value="Edit category of type:"/><br/>
                     <p:selectOneMenu value="#{createController.categoryType}"
@@ -87,7 +99,7 @@
                     <p:commandButton id="editCategory" update="container" value="Edit Category" action="#{createController.editCategoryObject()}" process="@form"/>
                 </h:form>
             </h:panelGroup>
-            <h:panelGroup>
+            <h:panelGroup rendered="#{!createController.create and !createController.categoryObject}">
                 <h:form>
                     <p:outputLabel value="Edit element:"/><br/>
                     <p:outputLabel value="Select element type:"/><br/>
@@ -120,8 +132,6 @@
                     <p:commandButton id="editElement" value="Edit element" action="#{createController.editElementObject()}" process="@form"/>
                 </h:form>
             </h:panelGroup>
-
-        <h:link value="index" outcome="index.xhtml"/><br/>
         </h:panelGroup>
     </h:body>
 </f:view>
