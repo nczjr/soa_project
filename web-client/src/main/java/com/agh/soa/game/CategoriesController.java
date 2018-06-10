@@ -5,7 +5,11 @@ import remote.RemoteCategoryService;
 
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @Named
@@ -23,12 +27,19 @@ public class CategoriesController {
     public List<CategoryType> getCategoryTypes() { return remoteCategoryService.getCategoryTypes(); }
     public List<Category> getCategoriesByType(int typeId) { return remoteCategoryService.getCategoriesByType(typeId); }
 
-    public void removeCategory(Category category) {
+    public void removeCategory(Category category) throws IOException {
         remoteCategoryService.deleteCategory(category);
+        reload();
 
     }
 
-    public void removeElement(Element element) {
+    public void removeElement(Element element) throws IOException {
         remoteCategoryService.deleteElement(element);
+        reload();
+    }
+
+    public void reload() throws IOException {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
 }

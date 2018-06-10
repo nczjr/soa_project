@@ -10,6 +10,7 @@
 <h:head></h:head>
 <f:view>
     <h:body>
+        <h:panelGroup id="container">
             <h:panelGroup>
             <h:form>
                 <p:outputLabel value="Add category:"/><br/>
@@ -82,7 +83,7 @@
                         <p:inputText value="#{createController.category.paramValue}"/>
                     </h:panelGroup>
                     <br/>
-                    <p:commandButton id="editCategory" value="Edit Category" action="#{createController.editCategoryObject()}" process="@form"/>
+                    <p:commandButton id="editCategory" update="container" value="Edit Category" action="#{createController.editCategoryObject()}" process="@form"/>
                 </h:form>
             </h:panelGroup>
             <h:panelGroup>
@@ -115,11 +116,12 @@
                         <h:inputText value="#{createController.element.name}"/>
                         <br/>
                     </h:panelGroup>
-                    <h:commandButton id="editElement" value="Edit element" action="#{createController.editElementObject()}"/>
+                    <h:commandButton id="editElement" update="container" value="Edit element" action="#{createController.editElementObject()}"/>
                 </h:form>
             </h:panelGroup>
 
         <h:link value="index" outcome="index.xhtml"/><br/>
+        </h:panelGroup>
     </h:body>
 </f:view>
 </html>
