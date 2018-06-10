@@ -35,7 +35,7 @@
                 <p:selectOneMenu value="#{createController.categoryType}"
                                  converter="#{categoryTypeConverter}">
                     <f:selectItems value="#{createController.categoryTypes}"/>
-                    <p:ajax event="itemSelect" listener="#{createController.updateElLabels()}" update="repeat"/>
+                    <p:ajax event="itemSelect" listener="#{createController.updateElLabels()}" update="categories,repeat"/>
                 </p:selectOneMenu>
                 <br/>
                 <h:panelGroup id="categories">

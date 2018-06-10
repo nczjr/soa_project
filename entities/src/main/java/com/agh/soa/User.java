@@ -9,9 +9,8 @@ import java.util.Objects;
 @NamedQuery(name = "findUserById", query = "SELECT OBJECT (u) from User u where u.id=:id")
 public class User implements Serializable {
     private int id;
-    private String username;
+    private String login;
     private String passwd;
-    private Role rolesByRoleId;
 
     @Id
     @Column(name = "id")
@@ -24,13 +23,13 @@ public class User implements Serializable {
     }
 
     @Basic
-    @Column(name = "username")
-    public String getUsername() {
-        return username;
+    @Column(name = "login")
+    public String getLogin() {
+        return login;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLogin(String username) {
+        this.login = username;
     }
 
     @Basic
@@ -49,23 +48,14 @@ public class User implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id == user.id &&
-                Objects.equals(username, user.username) &&
+                Objects.equals(login, user.login) &&
                 Objects.equals(passwd, user.passwd);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, username, passwd);
+        return Objects.hash(id, login, passwd);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    public Role getRolesByRoleId() {
-        return rolesByRoleId;
-    }
-
-    public void setRolesByRoleId(Role rolesByRoleId) {
-        this.rolesByRoleId = rolesByRoleId;
-    }
 }

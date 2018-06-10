@@ -8,8 +8,10 @@ import remote.RemoteCategoryService;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +42,9 @@ public class CategoryService implements RemoteCategoryService, Serializable {
     }
 
     public List<Category> getCategoriesByType(Integer typeId) {
-        return categoryDAO.findByCategoryType(typeId);
+        User user = getUserFromContext();
+        Role role = userDAO.getUserRole(user.getLogin());
+        return role.getRole().equals("Administrator") ? categoryDAO.findByCategoryType(typeId) : categoryDAO.findByCategoryTypeAndUser(typeId, user.getId());
     }
 
     public List<Element> getElements() {
@@ -70,6 +74,7 @@ public class CategoryService implements RemoteCategoryService, Serializable {
     }
 
     public void createCategory(Category category) {
+        category.setUser(getUserFromContext());
         categoryDAO.create(category);
     }
 
@@ -90,4 +95,13 @@ public class CategoryService implements RemoteCategoryService, Serializable {
     public void editElement(Element element) {
         elementDAO.edit(element);
     }
+
+    private User getUserFromContext() {
+        Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+        String login = principal.getName();
+        return userDAO.getUserByLogin(login);
+    }
+
+
+
 }

@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"> <body>
+<h1>Prosze sie zalogowac</h1>
+<form method="post" action="j_security_check" name="loginForm"> <h:panelGrid columns="2">
+    <h:outputLabel id="userNameLabel" for="j_username" value="Nazwa użytkownika:"/>
+    <h:inputText id="j_username" />
+    <h:outputLabel id="passwordLabel" for="j_password" value="Haslo:"/>
+    <h:inputSecret id="j_password" />
+    <h:panelGroup>
+        <h:commandButton type="submit" value="Zaloguj się"/> <h:commandButton type="reset" value="Wyczyść"/> </h:panelGroup>
+</h:panelGrid>
+    <h:outputText value="#{param['logged']}" />
+</form>
+</body>
+</html>

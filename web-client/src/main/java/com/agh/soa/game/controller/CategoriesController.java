@@ -1,4 +1,4 @@
-package com.agh.soa.game;
+package com.agh.soa.game.controller;
 
 import com.agh.soa.*;
 import remote.RemoteCategoryService;

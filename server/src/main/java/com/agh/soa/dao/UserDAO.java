@@ -1,5 +1,6 @@
 package com.agh.soa.dao;
 
+import com.agh.soa.Role;
 import com.agh.soa.User;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -25,5 +26,17 @@ public class UserDAO {
         Query query =entityManager.createNamedQuery("findUserById", User.class);
         query.setParameter("id", id);
         return (User) query.getSingleResult();
+    }
+
+    public User getUserByLogin(String login) {
+        Query query = entityManager.createQuery("FROM User u where u.login=:login");
+        query.setParameter("login", login);
+        return (User) query.getSingleResult();
+    }
+
+    public Role getUserRole(String login) {
+        Query query = entityManager.createQuery("FROM Role r where r.login=:login");
+        query.setParameter("login", login);
+        return (Role) query.getSingleResult();
     }
 }

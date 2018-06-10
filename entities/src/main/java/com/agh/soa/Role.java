@@ -5,19 +5,17 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "roles", schema = "projekt_soa", catalog = "")
+@Table(name = "user_roles", schema = "projekt_soa", catalog = "")
 public class Role implements Serializable {
-    private int id;
+    private String login;
     private String role;
 
     @Id
-    @Column(name = "id")
-    public int getId() {
-        return id;
-    }
+    @Column(name = "login")
+    public String getLogin() { return login;}
 
-    public void setId(int id) {
-        this.id = id;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Basic
@@ -35,13 +33,13 @@ public class Role implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role1 = (Role) o;
-        return id == role1.id &&
+        return login == role1.login &&
                 Objects.equals(role, role1.role);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, role);
+        return Objects.hash(login, role);
     }
 }

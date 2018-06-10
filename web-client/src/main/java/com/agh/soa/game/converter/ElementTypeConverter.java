@@ -1,8 +1,7 @@
 package com.agh.soa.game.converter;
 
-import com.agh.soa.Category;
 import com.agh.soa.ElementType;
-import com.agh.soa.game.CreateController;
+import com.agh.soa.game.controller.CreateController;
 
 import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;

@@ -1,4 +1,4 @@
-package com.agh.soa.game;
+package com.agh.soa.game.controller;
 
 import com.agh.soa.*;
 import remote.RemoteCategoryService;
@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Named
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class CreateController implements Serializable {
 
@@ -43,7 +44,7 @@ public class CreateController implements Serializable {
     public void initialize() {
         categoryTypes = remoteCategoryService.getCategoryTypes();
         categoryType = categoryTypes.get(0);
-        categories = remoteCategoryService.getAllCategories();
+        categories = remoteCategoryService.getCategoriesByType(categoryType.getId());
         elementTypes = remoteCategoryService.getElementTypes();
         elementType = remoteCategoryService.getElementTypeById(categoryType.getId());
         elements = remoteCategoryService.getByElementType(elementType.getId());
@@ -84,6 +85,7 @@ public class CreateController implements Serializable {
 
     public void updateElLabels() {
         element = new Element();
+        categories = remoteCategoryService.getCategoriesByType(categoryType.getId());
         elementType = remoteCategoryService.getElementTypeById(categoryType.getId());
 
     }
@@ -103,7 +105,6 @@ public class CreateController implements Serializable {
         Category categoryToPersist = new Category();
         categoryToPersist.setCategoryTypesByTypeId(categoryType);
         categoryToPersist.setParamValue(value);
-        categoryToPersist.setUser(remoteCategoryService.findUserById(1));
         remoteCategoryService.createCategory(categoryToPersist);
     }
 
