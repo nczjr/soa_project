@@ -35,20 +35,24 @@ public class CategoryDAO implements Serializable {
     }
 
     public List<Category> findByCategoryType(int typeId) {
-        Query query = entityManager.createQuery("FROM Category c where c.typeId=:typeId");
+        Query query = entityManager.createQuery("FROM Category c where c.categoryTypesByTypeId.id=:typeId");
         query.setParameter("typeId", typeId);
         return query.getResultList();
 
     }
 
-    public Category create(Category obj) {
+    public void create(Category obj) {
         entityManager.getTransaction().begin();
         entityManager.persist(obj);
-        entityManager.flush();
         entityManager.getTransaction().commit();
-        return obj;
     }
 
+
+    public void deleteCategory(Category category) {
+        entityManager.getTransaction().begin();
+        entityManager.remove(entityManager.contains(category) ? category : entityManager.merge(category));
+        entityManager.getTransaction().commit();
+    }
 
 
 

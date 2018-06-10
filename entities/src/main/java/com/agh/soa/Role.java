@@ -7,16 +7,16 @@ import java.util.Objects;
 @Entity
 @Table(name = "roles", schema = "projekt_soa", catalog = "")
 public class Role implements Serializable {
-    private Integer id;
+    private int id;
     private String role;
 
     @Id
     @Column(name = "id")
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

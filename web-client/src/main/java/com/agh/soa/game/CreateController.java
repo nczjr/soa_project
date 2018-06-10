@@ -33,6 +33,7 @@ public class CreateController implements Serializable {
     private Category category;
     private CategoryType categoryType;
     private ElementType elementType;
+    private Element element;
 
     private String label;
 
@@ -43,9 +44,7 @@ public class CreateController implements Serializable {
         categoryTypes = remoteCategoryService.getCategoryTypes();
         categoryType = categoryTypes.get(0);
         categories = remoteCategoryService.getAllCategories();
-        labels = remoteCategoryService.getParametersLabelsByCategoryType(categoryType.getId());
         category = new Category();
-        label = getLabel();
         parameterMap = new HashMap<>();
     }
 
@@ -74,59 +73,34 @@ public class CreateController implements Serializable {
                             .filter(categoryType -> categoryType.getId() == id).findAny().get();
     }
 
-    public void updateLabel() {
-        System.out.println("cipa");
-        label = getLabel();
-        category.setTypeId(categoryType.getId());
-
+    public void updateLabels() {
+        element = new Element();
+        elementType = remoteCategoryService.getElementTypeById(categoryType.getId());
     }
 
-    public void updateLabels(){
-        labels = new ArrayList<>();
-        parameterMap = new HashMap<>();
-        labels = remoteCategoryService.getParametersLabelsByCategoryType(categoryType.getId());
-        labels.forEach( s -> parameterMap.put((String) s, null));
-        stringLabel = remoteCategoryService.getStringLabelByCategoryType(categoryType.getId());
-        category.setTypeId(categoryType.getId());
-        categories = remoteCategoryService.getCategoriesByType(categoryType.getId());
-    }
-
-    public String getLabel() {
-        return remoteCategoryService.getLabelByCategoryTypeId(categoryType.getId());
-    }
 
     public void createCategoryObject() {
-        IntParameter parameter = new IntParameter();
-        parameter.setCategoriesByCategoryId(category);
-        parameter.setLabel(label);
-        parameter.setValue(value);
-        // @todo
-        parameter.setUserId(1);
-        remoteCategoryService.createCategoryByParameter(parameter);
+        Category categoryToPersist = new Category();
+        categoryToPersist.setCategoryTypesByTypeId(categoryType);
+        categoryToPersist.setParamValue(value);
+        categoryToPersist.setUser(remoteCategoryService.findUserById(1));
+        remoteCategoryService.createCategory(categoryToPersist);
     }
 
     public void createElementObject() {
-        List<IntParameter> parameters = new ArrayList<>();
-        Element element = new Element();
-        element.setCategories(category);
-        ElementType elementType = remoteCategoryService.getElementTypeById(categoryType.getId());
-        element.setTypeId(elementType);
-        for (String label : labels) {
-            IntParameter param = new IntParameter();
-            param.setValue(Integer.parseInt(parameterMap.get(label)));
-            param.setElementByElementId(element);
-            // @todo
-            param.setUserId(1);
-            param.setLabel(label);
-            parameters.add(param);
-        }
-        StringParameter stringParameter = new StringParameter();
-        stringParameter.setLabel(stringLabel);
-        stringParameter.setValue(stringValue);
-        stringParameter.setElementByElementId(element);
-        // @todo
-        stringParameter.setUserId(1);
-        remoteCategoryService.createElementByParameters(parameters, stringParameter);
+        element.setCategoriesByCategoryId(category);
+        element.setElementTypesByTypeId(elementType);
+        remoteCategoryService.createElement(element);
+    }
+
+
+    public void removeCategory(Category category) {
+        remoteCategoryService.deleteCategory(category);
+
+    }
+
+    public void removeElement(Element element) {
+        remoteCategoryService.deleteElement(element);
     }
 
     public Integer getValue() {
@@ -189,6 +163,14 @@ public class CreateController implements Serializable {
 
     public void setStringValue(String stringValue) {
         this.stringValue = stringValue;
+    }
+
+    public Element getElement() {
+        return element;
+    }
+
+    public void setElement(Element element) {
+        this.element = element;
     }
 }
 

@@ -19,7 +19,7 @@
             </p:selectOneMenu>
             <br/>
             <h:panelGroup id="paramLabel" >
-            <p:outputLabel value="#{createController.label}"/>
+            <p:outputLabel value="#{createController.categoryType.paramName}"/>
             <p:inputText value="#{createController.value}"/>
             </h:panelGroup>
             <br/>
@@ -31,7 +31,7 @@
             <p:selectOneMenu value="#{createController.categoryType}"
                              converter="#{categoryTypeConverter}">
                 <f:selectItems value="#{createController.categoryTypes}"/>
-                <p:ajax event="itemSelect" listener="#{createController.updateLabels()}" update="repeat, stringParam, categories"/>
+                <p:ajax event="itemSelect" listener="#{createController.updateLabels()}" update="repeat"/>
             </p:selectOneMenu>
             <br/>
             <h:panelGroup id="categories">
@@ -44,15 +44,15 @@
             <br/>
             <br/>
             <h:panelGroup id="repeat">
-                <ui:repeat  value="#{createController.labels}" var="parameterLabel">
-                    <p:outputLabel id="paramLabels" value="#{parameterLabel}"/>
-                    <h:inputText value="#{createController.parameterMap[parameterLabel]}"/>
+                    <p:outputLabel  value="#{createController.elementType.intLabel1}"/>
+                    <h:inputText value="#{createController.element.intValue1}"/>
+                    <p:outputLabel  value="#{createController.elementType.intLabel2}"/>
+                    <h:inputText value="#{createController.element.intValue2}"/>
+                    <p:outputLabel  value="#{createController.elementType.powerLabel}"/>
+                    <h:inputText value="#{createController.element.powerValue}"/>
+                    <p:outputLabel  value="#{createController.elementType.nameLabel}"/>
+                    <h:inputText value="#{createController.element.name}"/>
                 <br/>
-                </ui:repeat>
-            </h:panelGroup>
-            <h:panelGroup id="stringParam" >
-                <p:outputLabel value="#{createController.stringLabel}"/>
-                <p:inputText value="#{createController.stringValue}"/>
             </h:panelGroup>
             <h:commandButton id="addElement" value="add" action="#{createController.createElementObject}"/>
         </h:form>

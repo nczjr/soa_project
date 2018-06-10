@@ -1,6 +1,5 @@
 package com.agh.soa.game.converter;
 
-import com.agh.soa.Category;
 import com.agh.soa.CategoryType;
 import com.agh.soa.game.CreateController;
 

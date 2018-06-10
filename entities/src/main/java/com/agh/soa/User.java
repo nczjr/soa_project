@@ -6,20 +6,20 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users", schema = "projekt_soa", catalog = "")
+@NamedQuery(name = "findUserById", query = "SELECT OBJECT (u) from User u where u.id=:id")
 public class User implements Serializable {
-    private Integer id;
+    private int id;
     private String username;
     private String passwd;
     private Role rolesByRoleId;
-    private Integer roleId;
 
     @Id
     @Column(name = "id")
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -60,22 +60,12 @@ public class User implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
     public Role getRolesByRoleId() {
         return rolesByRoleId;
     }
 
     public void setRolesByRoleId(Role rolesByRoleId) {
         this.rolesByRoleId = rolesByRoleId;
-    }
-
-    @Basic
-    @Column(name = "role_id")
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
     }
 }

@@ -4,19 +4,16 @@ import com.agh.soa.*;
 import java.util.List;
 
 public interface RemoteCategoryService {
-    List getCategoryTypes();
+    List<CategoryType> getCategoryTypes();
     List getCategoriesByType(int typeId);
-    List getParametersByCategoryId(int id);
     List getElementsByCategoryId(int id);
-    List getIntParametersByElementId(int id);
-    List getStringParametersByElementId(int id);
-    void createCategoryByParameter(IntParameter parameter);
-    void createElementByParameters(List<IntParameter> parameters, StringParameter stringParameter);
     List getAllCategories();
     ElementType getElementTypeById(int id);
-    String getLabelByCategoryTypeId(int id);
-    List getParametersLabelsByCategoryType(int id);
-    String getStringLabelByCategoryType(int id);
+    void deleteCategory(Category category);
+    void deleteElement(Element element);
+    User findUserById(Integer id);
+    void createCategory(Category category);
+    void createElement(Element element);
 
     List<Element> getElements();
 }

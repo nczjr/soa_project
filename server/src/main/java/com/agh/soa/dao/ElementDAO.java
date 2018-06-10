@@ -28,13 +28,13 @@ public class ElementDAO {
     }
 
     public List<Element> findByCategoryId(int id) {
-        Query query = entityManager.createQuery("from  Element e where e.categories.id=:id", Element.class);
+        Query query = entityManager.createQuery("from  Element e where e.categoriesByCategoryId.id=:id", Element.class);
         query.setParameter("id", id);
         return query.getResultList();
     }
 
     public List<Element> findByElementType(int id) {
-        Query query = entityManager.createQuery("FROM Element e where e.typeId.id=:id", Element.class);
+        Query query = entityManager.createQuery("FROM Element e where e.categoriesByCategoryId.categoryTypesByTypeId.id=:id", Element.class);
         query.setParameter("id", id);
         return query.getResultList();
     }
@@ -44,4 +44,18 @@ public class ElementDAO {
         query.setParameter("id", id);
         return (ElementType) query.getSingleResult();
     }
+
+    public void create(Element element) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(element);
+        entityManager.getTransaction().commit();
+    }
+
+    public void deleteElement(Element element) {
+        entityManager.getTransaction().begin();
+        entityManager.remove(entityManager.contains(element) ? element : entityManager.merge(element));
+        entityManager.getTransaction().commit();
+    }
+
+
 }

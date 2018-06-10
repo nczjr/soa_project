@@ -1114,21 +1114,29 @@
     <table id="280" parent="7" name="category_types"/>
     <table id="281" parent="7" name="element_types"/>
     <table id="282" parent="7" name="elements"/>
-    <table id="283" parent="7" name="int_parameters"/>
-    <table id="284" parent="7" name="roles"/>
-    <table id="285" parent="7" name="string_parameters"/>
-    <table id="286" parent="7" name="users"/>
-    <column id="287" parent="279" name="id">
+    <table id="283" parent="7" name="roles"/>
+    <table id="284" parent="7" name="users"/>
+    <column id="285" parent="279" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="279" name="type_id">
+    <column id="286" parent="279" name="type_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="287" parent="279" name="paramValue">
+      <Position>3</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="288" parent="279" name="user_id">
+      <Position>4</Position>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="289" parent="279" name="Categories_id_uindex">
@@ -1140,340 +1148,273 @@
       <ColNames>type_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="291" parent="279" name="PRIMARY">
+    <index id="291" parent="279" name="categories_users_id_fk">
+      <ColNames>user_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="292" parent="279" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="292" parent="279" name="Categories_id_uindex">
+    <key id="293" parent="279" name="Categories_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>Categories_id_uindex</UnderlyingIndexName>
     </key>
-    <foreign-key id="293" parent="279" name="categories_category_types_id_fk">
+    <foreign-key id="294" parent="279" name="categories_category_types_id_fk">
       <ColNames>type_id</ColNames>
       <RefSchemaName>projekt_soa</RefSchemaName>
       <RefTableName>category_types</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="294" parent="280" name="id">
+    <foreign-key id="295" parent="279" name="categories_users_id_fk">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>projekt_soa</RefSchemaName>
+      <RefTableName>users</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="296" parent="280" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="280" name="name">
+    <column id="297" parent="280" name="name">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <index id="296" parent="280" name="category_types_id_uindex">
+    <column id="298" parent="280" name="paramName">
+      <Position>3</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+      <Collation>utf8_general_ci</Collation>
+    </column>
+    <index id="299" parent="280" name="category_types_id_uindex">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="297" parent="280" name="PRIMARY">
+    <key id="300" parent="280" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="298" parent="280" name="category_types_id_uindex">
+    <key id="301" parent="280" name="category_types_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>category_types_id_uindex</UnderlyingIndexName>
     </key>
-    <column id="299" parent="281" name="id">
+    <column id="302" parent="281" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="281" name="element_type">
+    <column id="303" parent="281" name="element_type">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <index id="301" parent="281" name="elements_id_uindex">
+    <column id="304" parent="281" name="intLabel1">
+      <Position>3</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="305" parent="281" name="intLabel2">
+      <Position>4</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+      <Collation>utf8_general_ci</Collation>
+    </column>
+    <column id="306" parent="281" name="nameLabel">
+      <Position>5</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+      <Collation>utf8_general_ci</Collation>
+    </column>
+    <column id="307" parent="281" name="category_type_id">
+      <Position>6</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="308" parent="281" name="powerLabel">
+      <Position>7</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+      <Collation>utf8_general_ci</Collation>
+    </column>
+    <index id="309" parent="281" name="elements_id_uindex">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="302" parent="281" name="PRIMARY">
+    <index id="310" parent="281" name="element_types_category_types_id_fk">
+      <ColNames>category_type_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="311" parent="281" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="303" parent="281" name="elements_id_uindex">
+    <key id="312" parent="281" name="elements_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>elements_id_uindex</UnderlyingIndexName>
     </key>
-    <column id="304" parent="282" name="id">
+    <foreign-key id="313" parent="281" name="element_types_category_types_id_fk">
+      <ColNames>category_type_id</ColNames>
+      <RefSchemaName>projekt_soa</RefSchemaName>
+      <RefTableName>category_types</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="314" parent="282" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="305" parent="282" name="type_id">
+    <column id="315" parent="282" name="type_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="306" parent="282" name="category_id">
+    <column id="316" parent="282" name="category_id">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="307" parent="282" name="Elements_id_uindex">
+    <column id="317" parent="282" name="name">
+      <Position>4</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+      <Collation>utf8_general_ci</Collation>
+    </column>
+    <column id="318" parent="282" name="intValue1">
+      <Position>5</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="319" parent="282" name="intValue2">
+      <Position>6</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="320" parent="282" name="powerValue">
+      <Position>7</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="321" parent="282" name="Elements_id_uindex">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="308" parent="282" name="Elements_element_types_id_fk">
+    <index id="322" parent="282" name="Elements_element_types_id_fk">
       <ColNames>type_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="309" parent="282" name="elements_categories_id_fk">
+    <index id="323" parent="282" name="elements_categories_id_fk">
       <ColNames>category_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="310" parent="282" name="PRIMARY">
+    <key id="324" parent="282" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="311" parent="282" name="Elements_id_uindex">
+    <key id="325" parent="282" name="Elements_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>Elements_id_uindex</UnderlyingIndexName>
     </key>
-    <foreign-key id="312" parent="282" name="Elements_element_types_id_fk">
+    <foreign-key id="326" parent="282" name="Elements_element_types_id_fk">
       <ColNames>type_id</ColNames>
       <RefSchemaName>projekt_soa</RefSchemaName>
       <RefTableName>element_types</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="313" parent="282" name="elements_categories_id_fk">
+    <foreign-key id="327" parent="282" name="elements_categories_id_fk">
       <ColNames>category_id</ColNames>
       <RefSchemaName>projekt_soa</RefSchemaName>
       <RefTableName>categories</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="314" parent="283" name="id">
+    <column id="328" parent="283" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="315" parent="283" name="label">
-      <Position>2</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-      <Collation>utf8_general_ci</Collation>
-    </column>
-    <column id="316" parent="283" name="value">
-      <Position>3</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="317" parent="283" name="category_id">
-      <Position>4</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="318" parent="283" name="element_id">
-      <Position>5</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="319" parent="283" name="user_id">
-      <Position>6</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="320" parent="283" name="Int_parameters_id_uindex">
-      <ColNames>id</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <index id="321" parent="283" name="int_parameters_categories_id_fk">
-      <ColNames>category_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="322" parent="283" name="int_parameters_elements_id_fk">
-      <ColNames>element_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="323" parent="283" name="int_parameters_users_id_fk">
-      <ColNames>user_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="324" parent="283" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <key id="325" parent="283" name="Int_parameters_id_uindex">
-      <ColNames>id</ColNames>
-      <UnderlyingIndexName>Int_parameters_id_uindex</UnderlyingIndexName>
-    </key>
-    <foreign-key id="326" parent="283" name="int_parameters_categories_id_fk">
-      <ColNames>category_id</ColNames>
-      <RefSchemaName>projekt_soa</RefSchemaName>
-      <RefTableName>categories</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <foreign-key id="327" parent="283" name="int_parameters_elements_id_fk">
-      <ColNames>element_id</ColNames>
-      <RefSchemaName>projekt_soa</RefSchemaName>
-      <RefTableName>elements</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <foreign-key id="328" parent="283" name="int_parameters_users_id_fk">
-      <ColNames>user_id</ColNames>
-      <RefSchemaName>projekt_soa</RefSchemaName>
-      <RefTableName>users</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <column id="329" parent="284" name="id">
-      <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="330" parent="284" name="role">
+    <column id="329" parent="283" name="role">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <index id="331" parent="284" name="roles_id_uindex">
+    <index id="330" parent="283" name="roles_id_uindex">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="332" parent="284" name="PRIMARY">
+    <key id="331" parent="283" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="333" parent="284" name="roles_id_uindex">
+    <key id="332" parent="283" name="roles_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>roles_id_uindex</UnderlyingIndexName>
     </key>
-    <column id="334" parent="285" name="id">
+    <column id="333" parent="284" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="335" parent="285" name="label">
+    <column id="334" parent="284" name="username">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <column id="336" parent="285" name="value">
+    <column id="335" parent="284" name="passwd">
       <Position>3</Position>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <column id="337" parent="285" name="element_id">
+    <column id="336" parent="284" name="role_id">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="338" parent="285" name="user_id">
-      <Position>5</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="339" parent="285" name="string_parameters_id_uindex">
+    <index id="337" parent="284" name="users_id_uindex">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="340" parent="285" name="string_parameters_elements_id_fk">
-      <ColNames>element_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="341" parent="285" name="string_parameters_users_id_fk">
-      <ColNames>user_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="342" parent="285" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <key id="343" parent="285" name="string_parameters_id_uindex">
-      <ColNames>id</ColNames>
-      <UnderlyingIndexName>string_parameters_id_uindex</UnderlyingIndexName>
-    </key>
-    <foreign-key id="344" parent="285" name="string_parameters_elements_id_fk">
-      <ColNames>element_id</ColNames>
-      <RefSchemaName>projekt_soa</RefSchemaName>
-      <RefTableName>elements</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <foreign-key id="345" parent="285" name="string_parameters_users_id_fk">
-      <ColNames>user_id</ColNames>
-      <RefSchemaName>projekt_soa</RefSchemaName>
-      <RefTableName>users</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <column id="346" parent="286" name="id">
-      <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="347" parent="286" name="username">
-      <Position>2</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-      <Collation>utf8_general_ci</Collation>
-    </column>
-    <column id="348" parent="286" name="passwd">
-      <Position>3</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-      <Collation>utf8_general_ci</Collation>
-    </column>
-    <column id="349" parent="286" name="role_id">
-      <Position>4</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="350" parent="286" name="users_id_uindex">
-      <ColNames>id</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <index id="351" parent="286" name="users_roles_id_fk">
+    <index id="338" parent="284" name="users_roles_id_fk">
       <ColNames>role_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="352" parent="286" name="PRIMARY">
+    <key id="339" parent="284" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="353" parent="286" name="users_id_uindex">
+    <key id="340" parent="284" name="users_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>users_id_uindex</UnderlyingIndexName>
     </key>
-    <foreign-key id="354" parent="286" name="users_roles_id_fk">
+    <foreign-key id="341" parent="284" name="users_roles_id_fk">
       <ColNames>role_id</ColNames>
       <RefSchemaName>projekt_soa</RefSchemaName>
       <RefTableName>roles</RefTableName>

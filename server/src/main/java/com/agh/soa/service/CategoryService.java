@@ -3,7 +3,7 @@ package com.agh.soa.service;
 import com.agh.soa.*;
 import com.agh.soa.dao.CategoryDAO;
 import com.agh.soa.dao.ElementDAO;
-import com.agh.soa.dao.ParametersDAO;
+import com.agh.soa.dao.UserDAO;
 import remote.RemoteCategoryService;
 
 import javax.ejb.Remote;
@@ -26,10 +26,10 @@ public class CategoryService implements RemoteCategoryService, Serializable {
     private ElementDAO elementDAO;
 
     @Inject
-    private ParametersDAO parametersDAO;
+    private EntityService entityService;
 
     @Inject
-    private EntityService entityService;
+    private UserDAO userDAO;
 
 
     public List<CategoryType> getCategoryTypes() { return  categoryDAO.findCategoryTypes(); }
@@ -42,23 +42,8 @@ public class CategoryService implements RemoteCategoryService, Serializable {
         return elementDAO.findAll();
     }
 
-    public List<IntParameter> getParametersByCategoryId(int id) { return entityService.getParametersByCategoryId(id); }
-
     public List<Element> getElementsByCategoryId(int id) { return entityService.getElementsByCategoryId(id); }
 
-    public List<IntParameter> getIntParametersByElementId(int id) { return parametersDAO.findIntParametersByElementId(id); }
-
-    public List<StringParameter> getStringParametersByElementId(int id) { return parametersDAO.findStringParametersByElementId(id); }
-
-    public void createCategoryByParameter(IntParameter parameter) {
-       parametersDAO.create(parameter);
-    }
-
-    public void createElementByParameters(List<IntParameter> parameters, StringParameter stringParameter) {
-        parameters.forEach(parametersDAO::create);
-        parametersDAO.createStringParameter(stringParameter);
-
-    }
 
     public ElementType getElementTypeById(int id) {
         return elementDAO.findElemenTypeByTypeId(id);
@@ -71,19 +56,22 @@ public class CategoryService implements RemoteCategoryService, Serializable {
         return categories;
     }
 
-    public String getLabelByCategoryTypeId(int id) {
-        int categoryId = categoryDAO.findByCategoryType(id).get(0).getId();
-        return parametersDAO.findByCategoryId(categoryId).get(0).getLabel();
+    public User findUserById(Integer id) {
+        return userDAO.getUserById(id);
     }
 
-    public String getStringLabelByCategoryType(int id) {
-        int elementId = elementDAO.findByElementType(id).get(0).getId();
-        return parametersDAO.findStringParametersByElementId(elementId).get(0).getLabel();
+    public void createCategory(Category category) {
+        categoryDAO.create(category);
     }
-    public List<String> getParametersLabelsByCategoryType(int id) {
-        int elementId = elementDAO.findByElementType(id).get(0).getId();
-        return parametersDAO.findParametersLabelsByElementId(elementId)
-                .stream()
-                .map(IntParameter::getLabel).collect(Collectors.toList());
+
+    public void createElement(Element element) {
+        elementDAO.create(element);
+    }
+    public void deleteCategory(Category category) {
+        categoryDAO.deleteCategory(category);
+    }
+
+    public void deleteElement(Element element) {
+        elementDAO.deleteElement(element);
     }
 }

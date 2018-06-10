@@ -20,13 +20,6 @@ public class CategoriesController {
         return remoteCategoryService.getElementsByCategoryId(id);
     }
 
-    public List<IntParameter> getParametersByCategoryId(int id) {
-        return remoteCategoryService.getParametersByCategoryId(id);
-    }
-
-    public List<IntParameter> getIntParametersByElementId(int id) { return remoteCategoryService.getIntParametersByElementId(id); }
-    public List<StringParameter> getStringParametersByElementId(int id) { return remoteCategoryService.getStringParametersByElementId(id); }
-
     public List<CategoryType> getCategoryTypes() { return remoteCategoryService.getCategoryTypes(); }
     public List<Category> getCategoriesByType(int typeId) { return remoteCategoryService.getCategoriesByType(typeId); }
 

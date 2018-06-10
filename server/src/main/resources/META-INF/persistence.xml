@@ -11,6 +11,12 @@
         <class>com.agh.soa.Category</class>
         <class>com.agh.soa.Element</class>
         <class>com.agh.soa.CategoryType</class>
+        <class>com.agh.soa.Categories</class>
+        <class>com.agh.soa.CategoryTypes</class>
+        <class>com.agh.soa.ElementTypes</class>
+        <class>com.agh.soa.Elements</class>
+        <class>com.agh.soa.Roles</class>
+        <class>com.agh.soa.Users</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projekt_soa"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

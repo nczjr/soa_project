@@ -1,39 +1,38 @@
 package com.agh.soa;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "categories", schema = "projekt_soa", catalog = "")
 public class Category implements Serializable {
-
-    private Integer id;
-    private Integer typeId;
-    private IntParameter intParameters;
+    private int id;
+    private Integer paramValue;
+    private CategoryType categoryTypesByTypeId;
+    private User user;
+    private List<Element> elementsByCategoryId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "type_id")
-    public Integer getTypeId() {
-        return typeId;
+    @Column(name = "paramValue")
+    public Integer getParamValue() {
+        return paramValue;
     }
 
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
+    public void setParamValue(Integer paramValue) {
+        this.paramValue = paramValue;
     }
 
     @Override
@@ -42,29 +41,48 @@ public class Category implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
         return id == category.id &&
-                Objects.equals(typeId, category.typeId);
+                Objects.equals(paramValue, category.paramValue);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, typeId);
+        return Objects.hash(id, paramValue);
     }
 
-    @OneToOne(mappedBy = "categoriesByCategoryId")
-    public IntParameter getIntParameters() {
-        return intParameters;
+    @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
+    public CategoryType getCategoryTypesByTypeId() {
+        return categoryTypesByTypeId;
     }
 
-    public void setIntParameters(IntParameter intParameters) {
-        this.intParameters = intParameters;
+    public void setCategoryTypesByTypeId(CategoryType categoryTypesByTypeId) {
+        this.categoryTypesByTypeId = categoryTypesByTypeId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @OneToMany(mappedBy = "categoriesByCategoryId", cascade = CascadeType.REMOVE)
+    public List<Element> getElementsByCategoryId() {
+        return elementsByCategoryId;
+    }
+
+    public void setElementsByCategoryId(List<Element> elementsByCategoryId) {
+        this.elementsByCategoryId = elementsByCategoryId;
     }
 
     @Override
     public String toString() {
-        return "com.agh.soa.Category{" +
-                "id=" + id +
-                ", categoryType='" + typeId +
+        return "Category{" +
+                "paramValue=" + paramValue +
                 '}';
     }
 }
