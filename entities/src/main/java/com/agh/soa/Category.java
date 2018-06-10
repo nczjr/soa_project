@@ -1,5 +1,7 @@
 package com.agh.soa;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
@@ -8,27 +10,29 @@ import java.util.Objects;
 @Entity
 @Table(name = "categories", schema = "projekt_soa", catalog = "")
 public class Category implements Serializable {
-    private int id;
-    private int typeId;
-    private Collection<IntParameter> intParameters;
+
+    private Integer id;
+    private Integer typeId;
+    private IntParameter intParameters;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "type_id")
-    public int getTypeId() {
+    public Integer getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(int typeId) {
+    public void setTypeId(Integer typeId) {
         this.typeId = typeId;
     }
 
@@ -47,18 +51,14 @@ public class Category implements Serializable {
         return Objects.hash(id, typeId);
     }
 
-
-    @OneToMany(mappedBy = "categoriesByCategoryId")
-    public Collection<IntParameter> getIntParameters() {
+    @OneToOne(mappedBy = "categoriesByCategoryId")
+    public IntParameter getIntParameters() {
         return intParameters;
     }
 
-    public void setIntParameters(Collection<IntParameter> intParameters) {
+    public void setIntParameters(IntParameter intParameters) {
         this.intParameters = intParameters;
     }
-
-
-
 
     @Override
     public String toString() {

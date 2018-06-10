@@ -1,22 +1,23 @@
 package com.agh.soa;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "category_types", schema = "projekt_soa", catalog = "")
 @NamedQuery(name = "getCategoryTypes", query = "SELECT OBJECT(categoryType) from CategoryType categoryType")
-public class CategoryType {
-    private int id;
+public class CategoryType implements Serializable {
+    private Integer id;
     private String name;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -43,5 +44,13 @@ public class CategoryType {
     public int hashCode() {
 
         return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

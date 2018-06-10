@@ -19,7 +19,6 @@
                                 <h:outputLabel value="#{categoryType.name}"/>
                                 <ul>
                                     <ui:repeat value="#{categoriesController.getCategoriesByType(categoryType.id)}" var="category">
-                                            <li>
                                                 <ui:repeat value="#{categoriesController.getParametersByCategoryId(category.id)}" var="parameter">
                                                     <h:panelGroup rendered="#{not empty parameter.value}">
                                                         <li>
@@ -28,7 +27,6 @@
                                                         </li>
                                                     </h:panelGroup>
                                                 </ui:repeat>
-                                            </li>
                                         <ul>
                                             <ui:repeat value="#{categoriesController.getElementsByCategoryId(category.id)}" var="element">
                                                 <li>
@@ -44,7 +42,7 @@
                                                     <ul>
                                                         <ui:repeat value="#{categoriesController.getStringParametersByElementId(element.id)}" var="stringParameter">
                                                             <li>
-                                                                <h:outputLabel value="#{stringParameter.label}"/>
+                                                                <h:outputLabel value="#{stringParameter.label}"/> -
                                                                 <h:outputLabel value="#{stringParameter.value}"/>
                                                             </li>
                                                         </ui:repeat>
@@ -59,7 +57,7 @@
                     </ul>
                 </h:panelGroup>
                 <h:panelGroup>
-                    <h:commandLink value="Dodaj nowy obiekt kategorii" action="category.xhtml"/>
+                    <h:commandLink value="Dodaj nowy obiekt kategorii" action="create.xhtml"/>
 
                 </h:panelGroup>
             </h:panelGrid>

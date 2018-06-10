@@ -13,15 +13,16 @@ import java.util.Objects;
 public class Element implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
     private ElementType typeId;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category categories;
 
     @OneToMany(mappedBy = "elementByElementId")
@@ -31,12 +32,11 @@ public class Element implements Serializable {
     private Collection<StringParameter> stringParameters;
 
 
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -83,5 +83,16 @@ public class Element implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Element{" +
+                "id=" + id +
+                ", typeId=" + typeId +
+                ", categories=" + categories +
+                ", intParameters=" + intParameters +
+                ", stringParameters=" + stringParameters +
+                '}';
     }
 }

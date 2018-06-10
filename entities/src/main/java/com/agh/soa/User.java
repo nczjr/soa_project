@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "users", schema = "projekt_soa", catalog = "")
 public class User implements Serializable {
-    private int id;
+    private Integer id;
     private String username;
     private String passwd;
     private Role rolesByRoleId;
@@ -15,11 +15,11 @@ public class User implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

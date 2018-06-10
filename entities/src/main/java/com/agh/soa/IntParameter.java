@@ -8,13 +8,14 @@ import java.util.Objects;
 @Table(name = "int_parameters", schema = "projekt_soa", catalog = "")
 @NamedQuery(
         name="findByCategoryId",
-        query="SELECT OBJECT(p) FROM IntParameter p where p.categoryId=:id and p.value is not null"
+        query="SELECT OBJECT(p) FROM IntParameter p where p.categoriesByCategoryId.id=:id"
 )
 public class IntParameter implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Basic
     @Column(name = "label")
@@ -24,20 +25,12 @@ public class IntParameter implements Serializable {
     @Column(name = "value")
     private Integer value;
 
-    @Basic
-    @Column(name = "category_id")
-    private Integer categoryId;
-
-    @Basic
-    @Column(name = "element_id")
-    private Integer elementId;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category categoriesByCategoryId;
 
-    @ManyToOne
-    @JoinColumn(name = "element_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "element_id", referencedColumnName = "id")
     private Element elementByElementId;
 
     @ManyToOne
@@ -46,7 +39,7 @@ public class IntParameter implements Serializable {
 
     @Basic
     @Column(name = "user_id")
-    private int userId;
+    private Integer userId;
 
     public Integer getUserId() {
         return userId;
@@ -56,11 +49,11 @@ public class IntParameter implements Serializable {
         this.userId = userId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -78,22 +71,6 @@ public class IntParameter implements Serializable {
 
     public void setValue(Integer value) {
         this.value = value;
-    }
-
-   public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public Integer getElementId() {
-        return elementId;
-    }
-
-    public void setElementId(Integer elementId) {
-        this.elementId = elementId;
     }
 
     public Category getCategoriesByCategoryId() {
@@ -127,15 +104,13 @@ public class IntParameter implements Serializable {
         IntParameter that = (IntParameter) o;
         return id == that.id &&
                 Objects.equals(label, that.label) &&
-                Objects.equals(value, that.value) &&
-                Objects.equals(categoryId, that.categoryId) &&
-                Objects.equals(elementId, that.elementId);
+                Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, label, value, categoryId, elementId);
+        return Objects.hash(id, label, value);
     }
 
 }

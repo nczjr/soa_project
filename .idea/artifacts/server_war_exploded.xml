@@ -20,7 +20,6 @@
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.11" />
           <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:2.6.0" />
-          <element id="library" level="project" name="Maven: org.primefaces:primefaces:6.0" />
           <element id="archive" name="entities-1.0-SNAPSHOT.jar">
             <element id="module-output" name="entities" />
           </element>

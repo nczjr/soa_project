@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<f:view>
+    <h:body>
+        <h:form>
+            <p:outputLabel value="Add category:"/><br/>
+            <p:selectOneMenu value="#{createController.categoryType}"
+                             converter="#{categoryTypeConverter}">
+                <f:selectItems value="#{createController.categoryTypes}"/>
+                <p:ajax event="itemSelect" listener="#{createController.updateLabel()}" update="paramLabel"/>
+            </p:selectOneMenu>
+            <br/>
+            <p:outputLabel id="paramLabel" value="#{createController.label}"/>
+            <p:inputText required="true" value="#{createController.value}" rendered="#{createController.value ne ''}"/>
+            <br/>
+            <p:commandButton id="addCategory" value="add" action="#{createController.createCategoryObject()}" process="@this"/>
+        </h:form>
+        <h:form>
+            <p:outputLabel value="Add element:"/><br/>
+            <p:outputLabel value="Select category type:"/><br/>
+            <p:selectOneMenu value="#{createController.categoryType}"
+                             converter="#{categoryTypeConverter}">
+                <f:selectItems value="#{createController.categoryTypes}"/>
+                <p:ajax event="itemSelect" listener="#{createController.updateLabels()}" update="repeat, stringParam, categories"/>
+            </p:selectOneMenu>
+            <br/>
+            <h:panelGroup id="categories">
+                <p:outputLabel value="Select category:"/><br/>
+                <p:selectOneMenu value="#{createController.category}"
+                                 converter="#{categoryConverter}">
+                    <f:selectItems value="#{createController.categories}"/>
+                </p:selectOneMenu>
+            </h:panelGroup>
+            <br/>
+            <br/>
+            <h:panelGroup id="repeat">
+                <ui:repeat  value="#{createController.labels}" var="parameterLabel">
+                    <p:outputLabel id="paramLabels" value="#{parameterLabel}"/>
+                    <h:inputText value="#{createController.parameterMap[parameterLabel]}"/>
+                <br/>
+                </ui:repeat>
+            </h:panelGroup>
+            <h:panelGroup id="stringParam" >
+                <p:outputLabel value="#{createController.stringLabel}"/>
+                <p:inputText value="#{createController.stringValue}"/>
+            </h:panelGroup>
+            <h:commandButton id="addElement" value="add" action="#{createController.createElementObject}"/>
+        </h:form>
+
+        <h:link value="index" outcome="index.xhtml"/><br/>
+    </h:body>
+</f:view>
+</html>
+

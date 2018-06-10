@@ -5,23 +5,23 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "string_parameters", schema = "projekt_soa", catalog = "")
+@Table(name = "string_parameters", schema = "projekt_soa",catalog = "")
 public class StringParameter implements Serializable {
-    private int id;
+    private Integer id;
     private String label;
     private String value;
-    private Integer elementId;
     private Integer userId;
     private Element elementByElementId;
     private User usersByUserId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,16 +46,6 @@ public class StringParameter implements Serializable {
     }
 
     @Basic
-    @Column(name = "element_id")
-    public Integer getElementId() {
-        return elementId;
-    }
-
-    public void setElementId(Integer elementId) {
-        this.elementId = elementId;
-    }
-
-    @Basic
     @Column(name = "user_id")
     public Integer getUserId() {
         return userId;
@@ -73,18 +63,17 @@ public class StringParameter implements Serializable {
         return id == that.id &&
                 Objects.equals(label, that.label) &&
                 Objects.equals(value, that.value) &&
-                Objects.equals(elementId, that.elementId) &&
                 Objects.equals(userId, that.userId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, label, value, elementId, userId);
+        return Objects.hash(id, label, value, userId);
     }
 
     @ManyToOne
-    @JoinColumn(name = "element_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "element_id", referencedColumnName = "id")
     public Element getElementByElementId() {
         return elementByElementId;
     }
