@@ -25,6 +25,7 @@ public class CategoriesController {
     }
 
     public List<CategoryType> getCategoryTypes() { return remoteCategoryService.getCategoryTypes(); }
+
     public List<Category> getCategoriesByType(int typeId) { return remoteCategoryService.getCategoriesByType(typeId); }
 
     public void removeCategory(Category category) throws IOException {

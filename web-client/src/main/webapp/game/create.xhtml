@@ -17,7 +17,7 @@
                 <p:selectOneMenu value="#{createController.categoryType}"
                                  converter="#{categoryTypeConverter}">
                     <f:selectItems value="#{createController.categoryTypes}"/>
-                    <p:ajax event="itemSelect" listener="#{createController.updateLabel()}" update="paramLabel"/>
+                    <p:ajax event="itemSelect" execute="@form" update="paramLabel"/>
                 </p:selectOneMenu>
                 <br/>
                 <h:panelGroup id="paramLabel" >
@@ -47,7 +47,7 @@
                 </h:panelGroup>
                 <br/>
                 <br/>
-                <h:panelGroup id="repeat">
+                <h:panelGrid id="repeat" columns="2">
                         <p:outputLabel  value="#{createController.elementType.intLabel1}"/>
                         <h:inputText value="#{createController.element.intValue1}"/>
                         <p:outputLabel  value="#{createController.elementType.intLabel2}"/>
@@ -56,9 +56,9 @@
                         <h:inputText value="#{createController.element.powerValue}"/>
                         <p:outputLabel  value="#{createController.elementType.nameLabel}"/>
                         <h:inputText value="#{createController.element.name}"/>
-                    <br/>
-                </h:panelGroup>
-                <h:commandButton id="addElement" value="add" action="#{createController.createElementObject}"/>
+                </h:panelGrid>
+                <p:commandButton id="addElement" value="add" action="#{createController.createElementObject}" process="@form"/>
+                <br/>
             </h:form>
             </h:panelGroup>
             <h:panelGroup>
@@ -78,6 +78,7 @@
                             <p:ajax event="itemSelect" listener="#{createController.updateCategory()}" update="categoryValue"/>
                         </p:selectOneMenu>
                     </h:panelGroup>
+                    <br/>
                     <h:panelGroup id="categoryValue" >
                         <p:outputLabel value="#{createController.categoryType.paramName}"/>
                         <p:inputText value="#{createController.category.paramValue}"/>
@@ -105,7 +106,7 @@
                     </p:selectOneMenu>
                     </h:panelGroup>
                     <br/>
-                    <h:panelGroup id="values">
+                    <h:panelGrid columns="2" id="values">
                         <p:outputLabel  value="#{createController.elementType.intLabel1}"/>
                         <h:inputText value="#{createController.element.intValue1}"/>
                         <p:outputLabel  value="#{createController.elementType.intLabel2}"/>
@@ -115,8 +116,8 @@
                         <p:outputLabel  value="#{createController.elementType.nameLabel}"/>
                         <h:inputText value="#{createController.element.name}"/>
                         <br/>
-                    </h:panelGroup>
-                    <h:commandButton id="editElement" update="container" value="Edit element" action="#{createController.editElementObject()}"/>
+                    </h:panelGrid>
+                    <p:commandButton id="editElement" value="Edit element" action="#{createController.editElementObject()}" process="@form"/>
                 </h:form>
             </h:panelGroup>
 

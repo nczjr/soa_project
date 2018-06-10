@@ -22,11 +22,6 @@ public class ElementDAO {
         entityManager = factory.createEntityManager();
     }
 
-    public List<Element> findAll() {
-        Query query = entityManager.createQuery("FROM Element ", Element.class);
-        return query.getResultList();
-    }
-
     public List<Element> findByCategoryId(int id) {
         Query query = entityManager.createQuery("from  Element e where e.categoriesByCategoryId.id=:id", Element.class);
         query.setParameter("id", id);

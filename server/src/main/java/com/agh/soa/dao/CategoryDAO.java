@@ -12,7 +12,6 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Named
 @ApplicationScoped
@@ -26,11 +25,6 @@ public class CategoryDAO implements Serializable {
         entityManager = factory.createEntityManager();
     }
 
-    public List<Category> findAll() {
-        Query query = entityManager.createQuery("FROM Category", Category.class);
-        return query.getResultList();
-    }
-
     public List<CategoryType> findCategoryTypes() {
         Query query = entityManager.createNamedQuery("getCategoryTypes");
         return query.getResultList();
@@ -41,12 +35,6 @@ public class CategoryDAO implements Serializable {
         query.setParameter("typeId", typeId);
         return query.getResultList();
 
-    }
-
-    public List<Category> findByCategoryTypeAndUser(Integer typeId, Integer userId) {
-        return findByCategoryType(typeId).stream()
-                                        .filter(category -> category.getUser().getId() == userId)
-                                        .collect(Collectors.toList());
     }
 
     public void create(Category obj) {

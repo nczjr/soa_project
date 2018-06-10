@@ -6,15 +6,14 @@ import remote.RemoteCategoryService;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Named
 @ViewScoped
@@ -28,16 +27,11 @@ public class CreateController implements Serializable {
     private List<CategoryType> categoryTypes;
     private List<ElementType> elementTypes;
     private List<Element> elements;
-    private String stringLabel;
-    private String stringValue;
 
     private Category category;
     private CategoryType categoryType;
     private ElementType elementType;
     private Element element;
-
-    private String label;
-
     private Integer value;
 
     @PostConstruct
@@ -76,13 +70,6 @@ public class CreateController implements Serializable {
                             .filter(categoryType -> categoryType.getId() == id).findAny().get();
     }
 
-    public void updateLabel() {
-    }
-
-    public void updateLabels() {
-        categories = remoteCategoryService.getCategoriesByType(categoryType.getId());
-    }
-
     public void updateElLabels() {
         element = new Element();
         categories = remoteCategoryService.getCategoriesByType(categoryType.getId());
@@ -101,27 +88,36 @@ public class CreateController implements Serializable {
     }
 
 
-    public void createCategoryObject() {
+    public void createCategoryObject() throws IOException {
         Category categoryToPersist = new Category();
         categoryToPersist.setCategoryTypesByTypeId(categoryType);
         categoryToPersist.setParamValue(value);
         remoteCategoryService.createCategory(categoryToPersist);
+        reload();
     }
 
-    public void createElementObject() {
+    public void createElementObject() throws IOException {
         element.setCategoriesByCategoryId(category);
         element.setElementTypesByTypeId(elementType);
         remoteCategoryService.createElement(element);
+        reload();
     }
 
-    public void editCategoryObject() {
+    public void editCategoryObject() throws IOException {
         remoteCategoryService.editCategory(category);
+        reload();
     }
 
-    public void editElementObject() {
+    public void editElementObject() throws IOException {
         remoteCategoryService.editElement(element);
+        reload();
     }
 
+
+    public void reload() throws IOException {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+    }
 
     public Integer getValue() {
         return value;
@@ -143,19 +139,6 @@ public class CreateController implements Serializable {
         this.categoryType = categoryType;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getStringLabel() {
-        return stringLabel;
-    }
-
-    public void setStringLabel(String stringLabel) {
-        this.stringLabel = stringLabel;
-    }
-
-
     public List<ElementType> getElementTypes() {
         return elementTypes;
     }
@@ -167,14 +150,6 @@ public class CreateController implements Serializable {
 
     public void setElementType(ElementType elementType) {
         this.elementType = elementType;
-    }
-
-    public String getStringValue() {
-        return stringValue;
-    }
-
-    public void setStringValue(String stringValue) {
-        this.stringValue = stringValue;
     }
 
     public Element getElement() {

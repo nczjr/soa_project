@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users", schema = "projekt_soa", catalog = "")
-@NamedQuery(name = "findUserById", query = "SELECT OBJECT (u) from User u where u.id=:id")
+@NamedQuery(name = "findUserByLogin", query = "SELECT OBJECT (u) from User u where u.login=:login")
 public class User implements Serializable {
     private int id;
     private String login;

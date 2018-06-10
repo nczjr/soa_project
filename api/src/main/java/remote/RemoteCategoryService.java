@@ -8,11 +8,9 @@ public interface RemoteCategoryService {
     List<ElementType> getElementTypes();
     List getCategoriesByType(Integer typeId);
     List getElementsByCategoryId(Integer id);
-    List getAllCategories();
     ElementType getElementTypeById(Integer id);
     void deleteCategory(Category category);
     void deleteElement(Element element);
-    User findUserById(Integer id);
     void createCategory(Category category);
     void createElement(Element element);
     List<Element> getByElementType(Integer id);
@@ -20,6 +18,4 @@ public interface RemoteCategoryService {
     void editElement(Element element);
     void changePassword(User user, String oldPassword,String newPassword);
     List<User> getUsers();
-
-    List<Element> getElements();
 }

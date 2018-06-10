@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Remote(RemoteCategoryService.class)
 @Stateless
@@ -27,13 +28,12 @@ public class CategoryService implements RemoteCategoryService, Serializable {
     private ElementDAO elementDAO;
 
     @Inject
-    private EntityService entityService;
-
-    @Inject
     private UserDAO userDAO;
 
 
-    public List<CategoryType> getCategoryTypes() { return  categoryDAO.findCategoryTypes(); }
+    public List<CategoryType> getCategoryTypes() {
+        return categoryDAO.findCategoryTypes();
+    }
 
     @Override
     public List<ElementType> getElementTypes() {
@@ -43,33 +43,22 @@ public class CategoryService implements RemoteCategoryService, Serializable {
     public List<Category> getCategoriesByType(Integer typeId) {
         User user = getUserFromContext();
         Role role = userDAO.getUserRole(user.getLogin());
-        return role.getRole().equals("Administrator") ? categoryDAO.findByCategoryType(typeId) : categoryDAO.findByCategoryTypeAndUser(typeId, user.getId());
+        return role.getRole().equals("Administrator") ? categoryDAO.findByCategoryType(typeId)
+                : categoryDAO.findByCategoryType(typeId).stream()
+                                .filter(category -> category.getUser().getId() == user.getId())
+                                .collect(Collectors.toList());
     }
 
-    public List<Element> getElements() {
-        return elementDAO.findAll();
+    public List<Element> getElementsByCategoryId(Integer id) {
+        return elementDAO.findByCategoryId(id);
     }
-
-    public List<Element> getElementsByCategoryId(Integer id) { return entityService.getElementsByCategoryId(id); }
-
 
     public ElementType getElementTypeById(Integer id) {
         return elementDAO.findElemenTypeByTypeId(id);
     }
-    public List<Category> getAllCategories() {
-        List<Category> categories = new ArrayList<>();
-        for( CategoryType c : categoryDAO.findCategoryTypes()){
-            categories.addAll(categoryDAO.findByCategoryType(c.getId()));
-        }
-        return categories;
-    }
 
     public List<Element> getByElementType(Integer id) {
         return elementDAO.findByElementType(id);
-    }
-
-    public User findUserById(Integer id) {
-        return userDAO.getUserById(id);
     }
 
     public void createCategory(Category category) {
@@ -80,6 +69,7 @@ public class CategoryService implements RemoteCategoryService, Serializable {
     public void createElement(Element element) {
         elementDAO.create(element);
     }
+
     public void deleteCategory(Category category) {
         categoryDAO.deleteCategory(category);
     }
@@ -91,6 +81,7 @@ public class CategoryService implements RemoteCategoryService, Serializable {
     public void editCategory(Category category) {
         categoryDAO.edit(category);
     }
+
     public void editElement(Element element) {
         elementDAO.edit(element);
     }
@@ -101,12 +92,11 @@ public class CategoryService implements RemoteCategoryService, Serializable {
         return userDAO.getUserByLogin(login);
     }
 
-    public void changePassword(User user,String oldPassword, String newPassword) {
-        if (userDAO.isValidPassword(user,oldPassword)) {
+    public void changePassword(User user, String oldPassword, String newPassword) {
+        if (userDAO.isValidPassword(user, oldPassword)) {
             user.setPasswd(newPassword);
             userDAO.edit(user);
         }
-
     }
 
     public List<User> getUsers() {

@@ -25,15 +25,8 @@ public class UserDAO {
         entityManager = factory.createEntityManager();
     }
 
-
-    public User getUserById(Integer id) {
-        Query query =entityManager.createNamedQuery("findUserById", User.class);
-        query.setParameter("id", id);
-        return (User) query.getSingleResult();
-    }
-
     public User getUserByLogin(String login) {
-        Query query = entityManager.createQuery("FROM User u where u.login=:login");
+        Query query = entityManager.createNamedQuery("findUserByLogin");
         query.setParameter("login", login);
         return (User) query.getSingleResult();
     }
