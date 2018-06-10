@@ -18,6 +18,8 @@ public interface RemoteCategoryService {
     List<Element> getByElementType(Integer id);
     void editCategory(Category category);
     void editElement(Element element);
+    void changePassword(User user, String oldPassword,String newPassword);
+    List<User> getUsers();
 
     List<Element> getElements();
 }

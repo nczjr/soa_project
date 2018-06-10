@@ -58,4 +58,11 @@ public class User implements Serializable {
         return Objects.hash(id, login, passwd);
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                '}';
+    }
 }

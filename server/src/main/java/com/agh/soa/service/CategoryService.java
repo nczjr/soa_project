@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Remote(RemoteCategoryService.class)
 @Stateless
@@ -102,6 +101,15 @@ public class CategoryService implements RemoteCategoryService, Serializable {
         return userDAO.getUserByLogin(login);
     }
 
+    public void changePassword(User user,String oldPassword, String newPassword) {
+        if (userDAO.isValidPassword(user,oldPassword)) {
+            user.setPasswd(newPassword);
+            userDAO.edit(user);
+        }
 
+    }
 
+    public List<User> getUsers() {
+        return userDAO.getUsers();
+    }
 }
