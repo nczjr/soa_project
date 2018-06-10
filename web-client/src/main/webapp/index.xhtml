@@ -26,7 +26,7 @@
                                                 <h:outputLabel value="#{category.paramValue}"/>
                                         </li>
                                         </h:panelGroup>
-                                        <p:commandButton id="removeCategory" value="remove category" action="#{createController.removeCategory(category)}" process="@form"/>
+                                        <p:commandButton id="removeCategory" value="remove category" render="@all" action="#{categoriesController.removeCategory(category)}" process="@form"/>
 
                                         <ul>
                                             <ui:repeat value="#{categoriesController.getElementsByCategoryId(category.id)}" var="element">
@@ -41,7 +41,7 @@
                                                                 <h:outputLabel value="#{element.intValue2}"/>
                                                                 <h:outputLabel value="#{element.elementTypesByTypeId.nameLabel}"/>
                                                                 <h:outputLabel value="#{element.name}"/>
-                                                                <p:commandButton id="removeElement" value="remove element" action="#{createController.removeElement(element)}" process="@form"/>
+                                                                <p:commandButton id="removeElement" value="remove element" render="@all" action="#{categoriesController.removeElement(element)}" process="@all"/>
 
                                                             </li>
                                                     </ul>

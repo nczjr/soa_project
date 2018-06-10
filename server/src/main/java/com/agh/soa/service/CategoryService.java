@@ -34,7 +34,12 @@ public class CategoryService implements RemoteCategoryService, Serializable {
 
     public List<CategoryType> getCategoryTypes() { return  categoryDAO.findCategoryTypes(); }
 
-    public List<Category> getCategoriesByType(int typeId) {
+    @Override
+    public List<ElementType> getElementTypes() {
+        return elementDAO.findElementTypes();
+    }
+
+    public List<Category> getCategoriesByType(Integer typeId) {
         return categoryDAO.findByCategoryType(typeId);
     }
 
@@ -42,10 +47,10 @@ public class CategoryService implements RemoteCategoryService, Serializable {
         return elementDAO.findAll();
     }
 
-    public List<Element> getElementsByCategoryId(int id) { return entityService.getElementsByCategoryId(id); }
+    public List<Element> getElementsByCategoryId(Integer id) { return entityService.getElementsByCategoryId(id); }
 
 
-    public ElementType getElementTypeById(int id) {
+    public ElementType getElementTypeById(Integer id) {
         return elementDAO.findElemenTypeByTypeId(id);
     }
     public List<Category> getAllCategories() {
@@ -54,6 +59,10 @@ public class CategoryService implements RemoteCategoryService, Serializable {
             categories.addAll(categoryDAO.findByCategoryType(c.getId()));
         }
         return categories;
+    }
+
+    public List<Element> getByElementType(Integer id) {
+        return elementDAO.findByElementType(id);
     }
 
     public User findUserById(Integer id) {
@@ -73,5 +82,12 @@ public class CategoryService implements RemoteCategoryService, Serializable {
 
     public void deleteElement(Element element) {
         elementDAO.deleteElement(element);
+    }
+
+    public void editCategory(Category category) {
+        categoryDAO.edit(category);
+    }
+    public void editElement(Element element) {
+        elementDAO.edit(element);
     }
 }

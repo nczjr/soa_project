@@ -6,6 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "element_types", schema = "projekt_soa", catalog = "")
+@NamedQuery(name = "getElementTypes", query = "SELECT object (el) from ElementType el")
 public class ElementType implements Serializable {
     private int id;
     private String elementType;
@@ -89,5 +90,12 @@ public class ElementType implements Serializable {
     public int hashCode() {
 
         return Objects.hash(id, elementType, intLabel1, intLabel2);
+    }
+
+    @Override
+    public String toString() {
+        return "ElementType{" +
+                "elementType='" + elementType + '\'' +
+                '}';
     }
 }

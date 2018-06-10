@@ -10,52 +10,114 @@
 <h:head></h:head>
 <f:view>
     <h:body>
-        <h:form>
-            <p:outputLabel value="Add category:"/><br/>
-            <p:selectOneMenu value="#{createController.categoryType}"
-                             converter="#{categoryTypeConverter}">
-                <f:selectItems value="#{createController.categoryTypes}"/>
-                <p:ajax event="itemSelect" listener="#{createController.updateLabel()}" update="paramLabel"/>
-            </p:selectOneMenu>
-            <br/>
-            <h:panelGroup id="paramLabel" >
-            <p:outputLabel value="#{createController.categoryType.paramName}"/>
-            <p:inputText value="#{createController.value}"/>
-            </h:panelGroup>
-            <br/>
-            <p:commandButton id="addCategory" value="add" action="#{createController.createCategoryObject()}" process="@form"/>
-        </h:form>
-        <h:form>
-            <p:outputLabel value="Add element:"/><br/>
-            <p:outputLabel value="Select category type:"/><br/>
-            <p:selectOneMenu value="#{createController.categoryType}"
-                             converter="#{categoryTypeConverter}">
-                <f:selectItems value="#{createController.categoryTypes}"/>
-                <p:ajax event="itemSelect" listener="#{createController.updateLabels()}" update="repeat"/>
-            </p:selectOneMenu>
-            <br/>
-            <h:panelGroup id="categories">
-                <p:outputLabel value="Select category:"/><br/>
-                <p:selectOneMenu value="#{createController.category}"
-                                 converter="#{categoryConverter}">
-                    <f:selectItems value="#{createController.categories}"/>
+            <h:panelGroup>
+            <h:form>
+                <p:outputLabel value="Add category:"/><br/>
+                <p:selectOneMenu value="#{createController.categoryType}"
+                                 converter="#{categoryTypeConverter}">
+                    <f:selectItems value="#{createController.categoryTypes}"/>
+                    <p:ajax event="itemSelect" listener="#{createController.updateLabel()}" update="paramLabel"/>
                 </p:selectOneMenu>
-            </h:panelGroup>
-            <br/>
-            <br/>
-            <h:panelGroup id="repeat">
-                    <p:outputLabel  value="#{createController.elementType.intLabel1}"/>
-                    <h:inputText value="#{createController.element.intValue1}"/>
-                    <p:outputLabel  value="#{createController.elementType.intLabel2}"/>
-                    <h:inputText value="#{createController.element.intValue2}"/>
-                    <p:outputLabel  value="#{createController.elementType.powerLabel}"/>
-                    <h:inputText value="#{createController.element.powerValue}"/>
-                    <p:outputLabel  value="#{createController.elementType.nameLabel}"/>
-                    <h:inputText value="#{createController.element.name}"/>
                 <br/>
+                <h:panelGroup id="paramLabel" >
+                <p:outputLabel value="#{createController.categoryType.paramName}"/>
+                <p:inputText value="#{createController.value}"/>
+                </h:panelGroup>
+                <br/>
+                <p:commandButton id="addCategory" value="add" action="#{createController.createCategoryObject()}" process="@form"/>
+            </h:form>
             </h:panelGroup>
-            <h:commandButton id="addElement" value="add" action="#{createController.createElementObject}"/>
-        </h:form>
+            <h:panelGroup>
+            <h:form>
+                <p:outputLabel value="Add element:"/><br/>
+                <p:outputLabel value="Select category type:"/><br/>
+                <p:selectOneMenu value="#{createController.categoryType}"
+                                 converter="#{categoryTypeConverter}">
+                    <f:selectItems value="#{createController.categoryTypes}"/>
+                    <p:ajax event="itemSelect" listener="#{createController.updateElLabels()}" update="repeat"/>
+                </p:selectOneMenu>
+                <br/>
+                <h:panelGroup id="categories">
+                    <p:outputLabel value="Select category:"/><br/>
+                    <p:selectOneMenu value="#{createController.category}"
+                                     converter="#{categoryConverter}">
+                        <f:selectItems value="#{createController.categories}"/>
+                    </p:selectOneMenu>
+                </h:panelGroup>
+                <br/>
+                <br/>
+                <h:panelGroup id="repeat">
+                        <p:outputLabel  value="#{createController.elementType.intLabel1}"/>
+                        <h:inputText value="#{createController.element.intValue1}"/>
+                        <p:outputLabel  value="#{createController.elementType.intLabel2}"/>
+                        <h:inputText value="#{createController.element.intValue2}"/>
+                        <p:outputLabel  value="#{createController.elementType.powerLabel}"/>
+                        <h:inputText value="#{createController.element.powerValue}"/>
+                        <p:outputLabel  value="#{createController.elementType.nameLabel}"/>
+                        <h:inputText value="#{createController.element.name}"/>
+                    <br/>
+                </h:panelGroup>
+                <h:commandButton id="addElement" value="add" action="#{createController.createElementObject}"/>
+            </h:form>
+            </h:panelGroup>
+            <h:panelGroup>
+                <h:form>
+                    <p:outputLabel value="Edit category of type:"/><br/>
+                    <p:selectOneMenu value="#{createController.categoryType}"
+                                     converter="#{categoryTypeConverter}">
+                        <f:selectItems value="#{createController.categoryTypes}"/>
+                        <p:ajax event="itemSelect" listener="#{createController.updateCategory()}" update="categoriesEdit"/>
+                    </p:selectOneMenu>
+                    <br/>
+                    <h:panelGroup id="categoriesEdit">
+                        <p:outputLabel value="Select category to edit:"/><br/>
+                        <p:selectOneMenu value="#{createController.category}"
+                                         converter="#{categoryConverter}">
+                            <f:selectItems value="#{createController.categories}"/>
+                            <p:ajax event="itemSelect" listener="#{createController.updateCategory()}" update="categoryValue"/>
+                        </p:selectOneMenu>
+                    </h:panelGroup>
+                    <h:panelGroup id="categoryValue" >
+                        <p:outputLabel value="#{createController.categoryType.paramName}"/>
+                        <p:inputText value="#{createController.category.paramValue}"/>
+                    </h:panelGroup>
+                    <br/>
+                    <p:commandButton id="editCategory" value="Edit Category" action="#{createController.editCategoryObject()}" process="@form"/>
+                </h:form>
+            </h:panelGroup>
+            <h:panelGroup>
+                <h:form>
+                    <p:outputLabel value="Edit element:"/><br/>
+                    <p:outputLabel value="Select element type:"/><br/>
+                    <p:selectOneMenu value="#{createController.elementType}"
+                                     converter="#{elementTypeConverter}">
+                        <f:selectItems value="#{createController.elementTypes}"/>
+                        <p:ajax event="itemSelect" listener="#{createController.updateElements()}" update="elements"/>
+                    </p:selectOneMenu>
+                    <br/>
+                    <h:panelGroup id="elements">
+                    <p:outputLabel value="Select element:"/><br/>
+                    <p:selectOneMenu value="#{createController.element}"
+                                     converter="#{elementConverter}">
+                        <f:selectItems value="#{createController.elements}"/>
+                        <p:ajax event="itemSelect" listener="#{createController.updateElements()}" update="values"/>
+                    </p:selectOneMenu>
+                    </h:panelGroup>
+                    <br/>
+                    <h:panelGroup id="values">
+                        <p:outputLabel  value="#{createController.elementType.intLabel1}"/>
+                        <h:inputText value="#{createController.element.intValue1}"/>
+                        <p:outputLabel  value="#{createController.elementType.intLabel2}"/>
+                        <h:inputText value="#{createController.element.intValue2}"/>
+                        <p:outputLabel  value="#{createController.elementType.powerLabel}"/>
+                        <h:inputText value="#{createController.element.powerValue}"/>
+                        <p:outputLabel  value="#{createController.elementType.nameLabel}"/>
+                        <h:inputText value="#{createController.element.name}"/>
+                        <br/>
+                    </h:panelGroup>
+                    <h:commandButton id="editElement" value="Edit element" action="#{createController.editElementObject()}"/>
+                </h:form>
+            </h:panelGroup>
 
         <h:link value="index" outcome="index.xhtml"/><br/>
     </h:body>

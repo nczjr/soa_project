@@ -6,6 +6,7 @@ import remote.RemoteCategoryService;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -23,10 +24,9 @@ public class CreateController implements Serializable {
     private RemoteCategoryService remoteCategoryService;
 
     private List<Category> categories;
-    private List<String> labels;
     private List<CategoryType> categoryTypes;
     private List<ElementType> elementTypes;
-    private Map<String, String> parameterMap;
+    private List<Element> elements;
     private String stringLabel;
     private String stringValue;
 
@@ -44,8 +44,10 @@ public class CreateController implements Serializable {
         categoryTypes = remoteCategoryService.getCategoryTypes();
         categoryType = categoryTypes.get(0);
         categories = remoteCategoryService.getAllCategories();
+        elementTypes = remoteCategoryService.getElementTypes();
+        elementType = remoteCategoryService.getElementTypeById(categoryType.getId());
+        elements = remoteCategoryService.getByElementType(elementType.getId());
         category = new Category();
-        parameterMap = new HashMap<>();
     }
 
     public List<Category> getCategories() {
@@ -73,9 +75,27 @@ public class CreateController implements Serializable {
                             .filter(categoryType -> categoryType.getId() == id).findAny().get();
     }
 
+    public void updateLabel() {
+    }
+
     public void updateLabels() {
+        categories = remoteCategoryService.getCategoriesByType(categoryType.getId());
+    }
+
+    public void updateElLabels() {
         element = new Element();
         elementType = remoteCategoryService.getElementTypeById(categoryType.getId());
+
+    }
+
+    public void updateCategory() {
+        categories = remoteCategoryService.getCategoriesByType(categoryType.getId());
+        category = categories.get(0);
+    }
+
+    public void updateElements() {
+        elements = remoteCategoryService.getByElementType(elementType.getId());
+        element = elements.get(0);
     }
 
 
@@ -93,15 +113,14 @@ public class CreateController implements Serializable {
         remoteCategoryService.createElement(element);
     }
 
-
-    public void removeCategory(Category category) {
-        remoteCategoryService.deleteCategory(category);
-
+    public void editCategoryObject() {
+        remoteCategoryService.editCategory(category);
     }
 
-    public void removeElement(Element element) {
-        remoteCategoryService.deleteElement(element);
+    public void editElementObject() {
+        remoteCategoryService.editElement(element);
     }
+
 
     public Integer getValue() {
         return value;
@@ -121,14 +140,6 @@ public class CreateController implements Serializable {
 
     public void setCategoryType(CategoryType categoryType) {
         this.categoryType = categoryType;
-    }
-
-    public List<String> getLabels() {
-        return labels;
-    }
-
-    public Map<String, String> getParameterMap() {
-        return parameterMap;
     }
 
     public void setLabel(String label) {
@@ -171,6 +182,10 @@ public class CreateController implements Serializable {
 
     public void setElement(Element element) {
         this.element = element;
+    }
+
+    public List<Element> getElements() {
+        return elements;
     }
 }
 

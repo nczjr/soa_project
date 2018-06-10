@@ -102,4 +102,14 @@ public class Element implements Serializable {
     public void setCategoriesByCategoryId(Category categoriesByCategoryId) {
         this.categoriesByCategoryId = categoriesByCategoryId;
     }
+
+    @Override
+    public String toString() {
+        return "Element{" +
+                "name='" + name + '\'' +
+                ", intValue1=" + intValue1 +
+                ", intValue2=" + intValue2 +
+                ", powerValue=" + powerValue +
+                '}';
+    }
 }
