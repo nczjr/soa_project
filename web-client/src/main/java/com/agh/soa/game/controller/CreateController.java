@@ -33,8 +33,6 @@ public class CreateController implements Serializable {
     private ElementType elementType;
     private Element element;
     private Integer value;
-    private boolean create;
-    private boolean categoryObject;
 
     @PostConstruct
     public void initialize() {
@@ -45,8 +43,6 @@ public class CreateController implements Serializable {
         elementType = remoteCategoryService.getElementTypeById(categoryType.getId());
         elements = remoteCategoryService.getByElementType(elementType.getId());
         category = new Category();
-        create = true;
-        categoryObject = true;
     }
 
     public List<Category> getCategories() {
@@ -71,7 +67,7 @@ public class CreateController implements Serializable {
 
     public CategoryType getCategoryTypeById(int id) {
         return categoryTypes.stream()
-                            .filter(categoryType -> categoryType.getId() == id).findAny().get();
+                .filter(categoryType -> categoryType.getId() == id).findAny().get();
     }
 
     public void updateElLabels() {
@@ -118,7 +114,7 @@ public class CreateController implements Serializable {
     }
 
 
-    public void reload() throws IOException {
+    private void reload() throws IOException {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
@@ -166,29 +162,6 @@ public class CreateController implements Serializable {
 
     public List<Element> getElements() {
         return elements;
-    }
-
-    public void setCategoryObjectToOpposite(){
-        setCategoryObject(isCategoryObject());
-    }
-
-    public void setCreateToOpposite() {
-        setCreate(isCreate());
-    }
-    public boolean isCreate() {
-        return create;
-    }
-
-    public void setCreate(boolean create) {
-        this.create = create;
-    }
-
-    public boolean isCategoryObject() {
-        return categoryObject;
-    }
-
-    public void setCategoryObject(boolean categoryObject) {
-        this.categoryObject = categoryObject;
     }
 }
 

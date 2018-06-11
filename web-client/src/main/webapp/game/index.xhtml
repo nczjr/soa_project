@@ -14,7 +14,8 @@
         <h:form>
             <h:panelGrid columns="2">
                 <h:panelGroup>
-                    <p:commandLink value="Dodaj lub edytuj obiekty" action="create.xhtml?faces-redirect=true"/>
+                    <p:commandLink value="Dodaj" action="create.xhtml?faces-redirect=true?&amp;mode=create"/>
+                    <p:commandLink value="Edytuj" action="create.xhtml?faces-redirect=true&amp;mode=edit"/>
                     <ul>
                         <ui:repeat value="#{categoriesController.getCategoryTypes()}" var="categoryType">
                             <li>
