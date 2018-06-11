@@ -38,12 +38,11 @@ public class LogFilter implements Filter {
             userSessions.put(name, jsessionId);
             filterChain.doFilter(servletRequest, servletResponse);
         } else if (s.equals(jsessionId)) {
-            ((HttpServletResponse)servletResponse).sendRedirect(((HttpServletRequest)servletRequest).getContextPath()
-                    + "/login/login.xhtml?logged=juz%20jest%20zalogowany");
+            filterChain.doFilter(servletRequest, servletResponse);
         } else {
             ((HttpServletRequest)servletRequest).getSession().invalidate();
             ((HttpServletResponse)servletResponse).sendRedirect(((HttpServletRequest)servletRequest).getContextPath()
-                    + "/login/login.xhtml?logged=juz%20jest%20zalogowany");
+                    + "/login/error.xhtml?logged=Podany%20uzytkownik%20jest%20juz%20zalogowany");
         }
     }
 
