@@ -33,6 +33,10 @@ public class CatalogController {
 
     }
 
+    public List<Element> getMostPowerfulElements() {
+        return remoteCategoryService.getMostPowerfulElements();
+    }
+
     public void removeElement(Element element) throws IOException {
         remoteCategoryService.deleteElement(element);
     }

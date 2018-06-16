@@ -14,6 +14,7 @@ public interface RemoteCategoryService {
     void createCategory(Category category);
     void createElement(Element element);
     List<Element> getByElementType(Integer id);
+    List<Element> getMostPowerfulElements();
     void editCategory(Category category);
     void editElement(Element element);
     void changePassword(User user, String oldPassword,String newPassword);

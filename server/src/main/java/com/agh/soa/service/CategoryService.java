@@ -65,6 +65,10 @@ public class CategoryService implements RemoteCategoryService, Serializable {
                                                     .collect(Collectors.toList());
     }
 
+    public List<Element> getMostPowerfulElements() {
+        return elementDAO.findMostPowerfulElements();
+    }
+
     public void createCategory(Category category) {
         category.setUser(getUserFromContext());
         categoryDAO.create(category);

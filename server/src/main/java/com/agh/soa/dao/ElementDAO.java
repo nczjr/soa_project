@@ -66,4 +66,8 @@ public class ElementDAO {
     }
 
 
+    public List<Element> findMostPowerfulElements() {
+        Query query = entityManager.createNativeQuery("select * from elements e where powerValue = (SELECT max(powerValue) from elements b where e.type_id=b.type_id group by type_id ) group by type_id", Element.class);
+        return query.getResultList();
+    }
 }
