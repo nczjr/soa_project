@@ -17,11 +17,6 @@
                         value="Katalog"
                         ajax="false"
                         action="index.xhmtl?faces-redirect=true"/>
-                <p:commandButton
-                        value="Następna strona"
-                        ajax="false"
-                        rendered="#{createController.editMode}"
-                        action="edit.xhmtl?faces-redirect=true"/>
             </h:form>
             <h:form>
             <h:panelGroup>
@@ -47,12 +42,22 @@
                     <br/>
                     <br/>
                     <h:panelGroup id="paramLabel" >
-                        <p:outputLabel value="#{createController.categoryType.paramName}"/>
-                        <p:inputText value="#{createController.category.paramValue}"/>
+                        <h:panelGroup rendered="#{createController.createMode}">
+                            <p:outputLabel value="#{createController.categoryType.paramName}"/>
+                            <p:inputText value="#{createController.category.paramValue}"/>
+                        </h:panelGroup>
                     </h:panelGroup>
                     <br/>
-                    <p:commandButton id="addCategory" rendered="#{createController.createMode}" value="Add category" action="#{createController.createCategoryObject()}" process="@form"/>
-                    <p:commandButton id="editCategory" rendered="#{createController.editMode}" update="container" value="Edit Category" action="#{createController.editCategoryObject()}" process="@form"/>
+                    <p:commandButton id="addCategory"
+                                     rendered="#{createController.createMode}"
+                                     value="Add category"
+                                     action="#{createController.createCategoryObject()}"
+                                     process="@form"/>
+                    <p:commandButton
+                            value="Następna strona"
+                            ajax="false"
+                            rendered="#{createController.editMode}"
+                            action="edit.xhmtl?faces-redirect=true"/>
 
             </h:panelGroup>
             </h:form>
@@ -100,13 +105,13 @@
                             <p:selectOneMenu value="#{createController.element}"
                                              converter="#{elementConverter}">
                                 <f:selectItems value="#{createController.elements}"/>
-                                <p:ajax event="itemSelect" listener="#{createController.updateElements()}" update="values"/>
+                                <p:ajax event="itemSelect"  update="values"/>
                             </p:selectOneMenu>
                         </h:panelGroup>
                     </h:panelGroup>
                     <br/>
                     <br/>
-                    <h:panelGrid id="values" columns="2">
+                    <h:panelGrid id="values" columns="2" rendered="#{createController.createMode}">
                         <p:outputLabel  value="#{createController.elementType.intLabel1}"/>
                         <h:inputText value="#{createController.element.intValue1}"/>
                         <p:outputLabel  value="#{createController.elementType.intLabel2}"/>
@@ -116,15 +121,12 @@
                         <p:outputLabel  value="#{createController.elementType.nameLabel}"/>
                         <h:inputText value="#{createController.element.name}"/>
                     </h:panelGrid>
-                    <p:commandButton id="editElement" value="Edit element" rendered="#{createController.editMode}" action="#{createController.editElementObject()}" process="@form"/>
 
                     <p:commandButton id="addElement" value="Add element" rendered="#{createController.createMode}" action="#{createController.createElementObject}" process="@form"/>
                     <br/>
 
             </h:panelGroup>
             </h:form>
-
-            <h:link value="index" outcome="index.xhtml"/><br/>
         </h:panelGroup>
     </h:body>
 </f:view>

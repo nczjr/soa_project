@@ -19,15 +19,17 @@
                 <h:form>
                     <br/>
                     <h:panelGroup id="categoryValue" >
-                        <p:outputLabel value="#{createController.categoryType.paramName}"/>
-                        <p:inputText value="#{createController.category.paramValue}"/>
+                            <p:outputLabel value="#{createController.categoryType.paramName}"/>
+                            <p:inputText value="#{createController.category.paramValue}"/>
                     </h:panelGroup>
                     <br/>
-                    <p:commandButton id="editCategory" update="container" value="Edit Category" action="#{createController.editCategoryObject()}" process="@form"/>
+                    <p:commandButton id="editCategory" update="container" rendered="#{param['type'] eq 'category'}" value="Edit Category" action="#{createController.editCategoryObject()}" process="@form"/>
                 </h:form>
             </h:panelGroup>
             <h:panelGroup>
                 <h:form>
+                    <h:panelGroup>
+
                     <h:panelGrid columns="2" id="values">
                         <p:outputLabel  value="#{createController.elementType.intLabel1}"/>
                         <h:inputText value="#{createController.element.intValue1}"/>
@@ -39,6 +41,7 @@
                         <h:inputText value="#{createController.element.name}"/>
                         <br/>
                     </h:panelGrid>
+                    </h:panelGroup>
                     <p:commandButton id="editElement" value="Edit element" action="#{createController.editElementObject()}" process="@form"/>
                 </h:form>
             </h:panelGroup>
