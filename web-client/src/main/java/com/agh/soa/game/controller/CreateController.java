@@ -61,6 +61,10 @@ public class CreateController implements Serializable {
         }
     }
 
+    public void closeConversation(){
+        conversation.end();
+    }
+
     public Conversation getConversation() {
         return conversation;
     }
@@ -98,38 +102,35 @@ public class CreateController implements Serializable {
 
     public void updateCategory() {
         categories = remoteCategoryService.getCategoriesByType(categoryType.getId());
-        category = categories.get(0);
+        if (isEditMode())
+            category = categories.get(0);
     }
 
     public void updateElements() {
         elements = remoteCategoryService.getByElementType(elementType.getId());
-        element = elements.get(0);
+        if (isEditMode())
+            element = elements.get(0);
     }
 
 
     public void createCategoryObject() throws IOException {
-        Category categoryToPersist = new Category();
+        Category categoryToPersist = category;
         categoryToPersist.setCategoryTypesByTypeId(categoryType);
-        categoryToPersist.setParamValue(value);
         remoteCategoryService.createCategory(categoryToPersist);
-        reload();
     }
 
     public void createElementObject() throws IOException {
         element.setCategoriesByCategoryId(category);
         element.setElementTypesByTypeId(elementType);
         remoteCategoryService.createElement(element);
-        reload();
     }
 
-    public void editCategoryObject() throws IOException {
+    public void editCategoryObject() {
         remoteCategoryService.editCategory(category);
-        reload();
     }
 
-    public void editElementObject() throws IOException {
+    public void editElementObject() {
         remoteCategoryService.editElement(element);
-        reload();
     }
 
     public boolean isEditMode() {
@@ -140,10 +141,12 @@ public class CreateController implements Serializable {
         return "create".equals(mode);
     }
 
-
-    private void reload() throws IOException {
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+    public void redirect() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("create.xhtml?faces-redirect=true&amp;mode=edit");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String getRequestParameter(String parameterName) {

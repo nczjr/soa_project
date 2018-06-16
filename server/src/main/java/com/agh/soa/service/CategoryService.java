@@ -58,7 +58,11 @@ public class CategoryService implements RemoteCategoryService, Serializable {
     }
 
     public List<Element> getByElementType(Integer id) {
-        return elementDAO.findByElementType(id);
+        User user = getUserFromContext();
+        return FacesContext.getCurrentInstance().getExternalContext().isUserInRole("Administrator") ?
+                elementDAO.findByElementType(id) : elementDAO.findByElementType(id).stream()
+                                                    .filter(element -> element.getCategoriesByCategoryId().getUser().getId() == user.getId())
+                                                    .collect(Collectors.toList());
     }
 
     public void createCategory(Category category) {

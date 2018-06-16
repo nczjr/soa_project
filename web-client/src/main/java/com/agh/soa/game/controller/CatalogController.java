@@ -30,13 +30,11 @@ public class CatalogController {
 
     public void removeCategory(Category category) throws IOException {
         remoteCategoryService.deleteCategory(category);
-        reload();
 
     }
 
     public void removeElement(Element element) throws IOException {
         remoteCategoryService.deleteElement(element);
-        reload();
     }
 
     public void reload() throws IOException {

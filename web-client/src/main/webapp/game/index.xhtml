@@ -13,13 +13,11 @@
     <h:body>
         <h:form>
             <h:panelGrid columns="2">
-                <h:panelGroup>
+                <h:panelGroup id="panel">
                     <h:commandButton value="Dodaj" action="create.xhtml?faces-redirect=true?&amp;mode=create"/>
                     <br/>
                     <h:commandButton value="Edytuj" action="create.xhtml?faces-redirect=true&amp;mode=edit"/>
                     <br/>
-                    <p:commandButton value="Nastepna strona" ajax="false" action="edit.xhtml?faces-redirect=true" />
-
                     <ul>
                         <ui:repeat value="#{catalogController.getCategoryTypes()}" var="categoryType">
                             <li>
@@ -32,7 +30,7 @@
                                                 <h:outputLabel value="#{category.paramValue}"/>
                                         </li>
                                         </h:panelGroup>
-                                        <p:commandButton id="removeCategory" value="remove category" render="@all" action="#{catalogController.removeCategory(category)}" process="@form"/>
+                                        <p:commandButton id="removeCategory" value="remove category" update="j_idt5:panel" action="#{catalogController.removeCategory(category)}" process="@form"/>
 
                                         <ul>
                                             <ui:repeat value="#{catalogController.getElementsByCategoryId(category.id)}" var="element">
@@ -50,7 +48,7 @@
                                                                 <h:outputLabel value="#{element.elementTypesByTypeId.nameLabel}"/>
                                                                 <h:outputLabel value="#{element.name}"/>
                                                             </h:panelGrid>
-                                                        <p:commandButton id="removeElement" value="remove element" render="@all" action="#{catalogController.removeElement(element)}" process="@all"/>
+                                                        <p:commandButton id="removeElement" value="remove element" update="j_idt5:panel" action="#{catalogController.removeElement(element)}" process="@all"/>
                                                     </ul>
                                                 </li>
                                             </ui:repeat>

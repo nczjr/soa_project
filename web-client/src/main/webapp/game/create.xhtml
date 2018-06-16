@@ -16,6 +16,7 @@
                 <p:commandButton
                         value="Katalog"
                         ajax="false"
+                        actionListener="#{createController.closeConversation()}"
                         action="index.xhmtl?faces-redirect=true"/>
             </h:form>
             <h:form>
@@ -44,13 +45,16 @@
                     <h:panelGroup id="paramLabel" >
                         <h:panelGroup rendered="#{createController.createMode}">
                             <p:outputLabel value="#{createController.categoryType.paramName}"/>
-                            <p:inputText value="#{createController.category.paramValue}"/>
+                            <p:inputText value="#{createController.category.paramValue}">
+                                    <p:ajax process="@this"/>
+                            </p:inputText>
                         </h:panelGroup>
                     </h:panelGroup>
                     <br/>
                     <p:commandButton id="addCategory"
                                      rendered="#{createController.createMode}"
                                      value="Add category"
+                                     update="categoriesPanel"
                                      action="#{createController.createCategoryObject()}"
                                      process="@form"/>
                     <p:commandButton
@@ -122,7 +126,12 @@
                         <h:inputText value="#{createController.element.name}"/>
                     </h:panelGrid>
 
-                    <p:commandButton id="addElement" value="Add element" rendered="#{createController.createMode}" action="#{createController.createElementObject}" process="@form"/>
+                    <p:commandButton id="addElement"
+                                     value="Add element"
+                                     rendered="#{createController.createMode}"
+                                     update="elements"
+                                     action="#{createController.createElementObject}"
+                                     process="@form"/>
                     <br/>
 
             </h:panelGroup>

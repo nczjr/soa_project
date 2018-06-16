@@ -23,7 +23,7 @@
                             <p:inputText value="#{createController.category.paramValue}"/>
                     </h:panelGroup>
                     <br/>
-                    <p:commandButton id="editCategory" update="container" rendered="#{param['type'] eq 'category'}" value="Edit Category" action="#{createController.editCategoryObject()}" process="@form"/>
+                    <p:commandButton id="editCategory" update="container" rendered="#{createController.editMode}" value="Edit Category" action="#{createController.editCategoryObject()}" process="@form"/>
                 </h:form>
             </h:panelGroup>
             <h:panelGroup>
@@ -42,7 +42,7 @@
                         <br/>
                     </h:panelGrid>
                     </h:panelGroup>
-                    <p:commandButton id="editElement" value="Edit element" action="#{createController.editElementObject()}" process="@form"/>
+                    <p:commandButton id="editElement" value="Edit element"  rendered="#{createController.editMode}" action="#{createController.editElementObject()}" process="@form"/>
                 </h:form>
             </h:panelGroup>
         </h:panelGroup>
