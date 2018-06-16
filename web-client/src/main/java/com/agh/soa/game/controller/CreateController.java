@@ -6,17 +6,21 @@ import remote.RemoteCategoryService;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Named
-@ViewScoped
+@ConversationScoped
 @ManagedBean
 public class CreateController implements Serializable {
 
@@ -33,18 +37,33 @@ public class CreateController implements Serializable {
     private ElementType elementType;
     private Element element;
     private Integer value;
+    private String mode;
+    @Inject
+    private Conversation conversation;
+
 
     @PostConstruct
     public void initialize() {
-        categoryTypes = remoteCategoryService.getCategoryTypes();
-        categoryType = categoryTypes.get(0);
-        categories = remoteCategoryService.getCategoriesByType(categoryType.getId());
-        elementTypes = remoteCategoryService.getElementTypes();
-        elementType = remoteCategoryService.getElementTypeById(categoryType.getId());
-        elements = remoteCategoryService.getByElementType(elementType.getId());
-        category = new Category();
+            mode = getRequestParameter("mode");
+            categoryTypes = remoteCategoryService.getCategoryTypes();
+            categoryType = categoryTypes.get(0);
+            categories = remoteCategoryService.getCategoriesByType(categoryType.getId());
+            elementTypes = remoteCategoryService.getElementTypes();
+            elementType = remoteCategoryService.getElementTypeById(categoryType.getId());
+            elements = remoteCategoryService.getByElementType(elementType.getId());
+            category = new Category();
+
     }
 
+    public void initConversation(){
+        if (!FacesContext.getCurrentInstance().isPostback() && conversation.isTransient()) {
+            conversation.begin();
+        }
+    }
+
+    public Conversation getConversation() {
+        return conversation;
+    }
     public List<Category> getCategories() {
         return categories;
     }
@@ -113,10 +132,23 @@ public class CreateController implements Serializable {
         reload();
     }
 
+    public boolean isEditMode() {
+        return "edit".equals(mode);
+    }
+
+    public boolean isCreateMode() {
+        return "create".equals(mode);
+    }
+
 
     private void reload() throws IOException {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+    }
+
+    private String getRequestParameter(String parameterName) {
+        Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        return requestParameterMap.get(parameterName);
     }
 
     public Integer getValue() {

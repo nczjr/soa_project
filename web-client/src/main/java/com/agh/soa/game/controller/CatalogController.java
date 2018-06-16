@@ -14,7 +14,7 @@ import java.util.List;
 
 @Named
 @ManagedBean
-public class CategoriesController {
+public class CatalogController {
 
     @EJB(mappedName = "java:global/server-1.0-SNAPSHOT/CategoryService!remote.RemoteCategoryService")
     private RemoteCategoryService remoteCategoryService;

@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<f:view>
+    <h:body>
+        <h:form>
+        <p:commandButton value="Katalog" ajax="false" action="index.xhtml?faces-redirect=true" />
+        <p:commandButton value="Poprzednia strona" ajax="false" action="create.xhtml?faces-redirect=true&amp;mode=edit" />
+        </h:form>
+        <h:panelGroup id="container">
+            <h:panelGroup>
+                <h:form>
+                    <br/>
+                    <h:panelGroup id="categoryValue" >
+                        <p:outputLabel value="#{createController.categoryType.paramName}"/>
+                        <p:inputText value="#{createController.category.paramValue}"/>
+                    </h:panelGroup>
+                    <br/>
+                    <p:commandButton id="editCategory" update="container" value="Edit Category" action="#{createController.editCategoryObject()}" process="@form"/>
+                </h:form>
+            </h:panelGroup>
+            <h:panelGroup>
+                <h:form>
+                    <h:panelGrid columns="2" id="values">
+                        <p:outputLabel  value="#{createController.elementType.intLabel1}"/>
+                        <h:inputText value="#{createController.element.intValue1}"/>
+                        <p:outputLabel  value="#{createController.elementType.intLabel2}"/>
+                        <h:inputText value="#{createController.element.intValue2}"/>
+                        <p:outputLabel  value="#{createController.elementType.powerLabel}"/>
+                        <h:inputText value="#{createController.element.powerValue}"/>
+                        <p:outputLabel  value="#{createController.elementType.nameLabel}"/>
+                        <h:inputText value="#{createController.element.name}"/>
+                        <br/>
+                    </h:panelGrid>
+                    <p:commandButton id="editElement" value="Edit element" action="#{createController.editElementObject()}" process="@form"/>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:body>
+</f:view>
+</html>
+
