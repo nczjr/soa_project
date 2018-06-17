@@ -19,7 +19,6 @@
                     <h:commandButton value="Edytuj" action="create.xhtml?faces-redirect=true&amp;mode=edit"/>
                     <br/>
 
-
                     <ul>
                         <ui:repeat value="#{catalogController.getCategoryTypes()}" var="categoryType">
                             <li>
@@ -65,9 +64,29 @@
                 </h:panelGroup>
             </h:panelGrid>
         </h:form>
-        <p:growl widgetVar="growl" showDetail="true" />
-        <p:socket onMessage="handleMessage" channel="/notify" />
-
+        <h:panelGroup id="powerfulElements">
+            <h:panelGroup>
+            <h:outputLabel value="Most powerful elements"/>
+            <ui:repeat value="#{catalogController.powerfulElements}" var="element">
+                <li>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="#{element.elementTypesByTypeId.intLabel1}"/>
+                        <h:outputLabel value="#{element.intValue1}"/>
+                        <h:outputLabel value="#{element.elementTypesByTypeId.intLabel2}"/>
+                        <h:outputLabel value="#{element.intValue2}"/>
+                        <h:outputLabel value="#{element.elementTypesByTypeId.powerLabel}"/>
+                        <h:outputLabel value="#{element.powerValue}"/>
+                        <h:outputLabel value="#{element.elementTypesByTypeId.nameLabel}"/>
+                        <h:outputLabel value="#{element.name}"/>
+                    </h:panelGrid>
+                </li>
+            </ui:repeat>
+            </h:panelGroup>
+        </h:panelGroup>
+         <p:growl widgetVar="growl" showDetail="true" />
+        <p:socket onMessage="handleMessage" channel="/notify" >
+            <p:ajax event="message" update="powerfulElements"/>
+        </p:socket>
         <script type="text/javascript">
             function handleMessage(facesmessage) {
                 facesmessage.severity = 'info';
@@ -75,6 +94,7 @@
                 PF('growl').show([facesmessage]);
             }
         </script>
+
     </h:body>
 </f:view>
 

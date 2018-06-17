@@ -1,6 +1,7 @@
 package com.agh.soa.game.controller;
 
 import com.agh.soa.*;
+import com.agh.soa.game.event.ElementChangeEvent;
 import remote.RemoteCategoryService;
 
 import javax.annotation.ManagedBean;
@@ -8,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.event.Event;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -40,6 +42,8 @@ public class CreateController implements Serializable {
     private String mode;
     @Inject
     private Conversation conversation;
+    @Inject
+    private Event<ElementChangeEvent> elementChangeEventEvent;
 
 
     @PostConstruct
@@ -123,6 +127,7 @@ public class CreateController implements Serializable {
         element.setCategoriesByCategoryId(category);
         element.setElementTypesByTypeId(elementType);
         remoteCategoryService.createElement(element);
+        fireElementEvent();
     }
 
     public void editCategoryObject() {
@@ -131,6 +136,7 @@ public class CreateController implements Serializable {
 
     public void editElementObject() {
         remoteCategoryService.editElement(element);
+        fireElementEvent();
     }
 
     public boolean isEditMode() {
@@ -147,6 +153,11 @@ public class CreateController implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void fireElementEvent() {
+        ElementChangeEvent event = new ElementChangeEvent();
+        elementChangeEventEvent.fire(event);
     }
 
     private String getRequestParameter(String parameterName) {

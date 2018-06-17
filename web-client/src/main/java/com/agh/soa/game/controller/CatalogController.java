@@ -7,6 +7,7 @@ import remote.RemoteCategoryService;
 
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.faces.application.FacesMessage;
@@ -16,17 +17,20 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 @Named
 @ManagedBean
-public class CatalogController {
+@SessionScoped
+public class CatalogController implements Serializable {
 
     @EJB(mappedName = "java:global/server-1.0-SNAPSHOT/CategoryService!remote.RemoteCategoryService")
     private RemoteCategoryService remoteCategoryService;
 
     @Inject
     private Event<ElementChangeEvent> elementChangeEventEvent;
+    private List<Element> powerfulElements;
 
 
     public List<Element> getElementsByCategoryId(int id) {
@@ -44,9 +48,9 @@ public class CatalogController {
     }
 
     public void getMostPowerfulElements(@Observes ElementChangeEvent elementChangeEvent) {
-        List<Element> elements = remoteCategoryService.getMostPowerfulElements();
+        powerfulElements = remoteCategoryService.getMostPowerfulElements();
         org.primefaces.push.EventBus eventBus = EventBusFactory.getDefault().eventBus();
-        eventBus.publish("/notify", new FacesMessage(elements.toString()));
+        eventBus.publish("/notify", new FacesMessage(powerfulElements.toString()));
         //return remoteCategoryService.getMostPowerfulElements();
     }
 
@@ -63,5 +67,9 @@ public class CatalogController {
     private void fireElementEvent() {
         ElementChangeEvent event = new ElementChangeEvent();
         elementChangeEventEvent.fire(event);
+    }
+
+    public List<Element> getPowerfulElements() {
+        return powerfulElements;
     }
 }
