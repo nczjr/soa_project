@@ -1,5 +1,8 @@
 package com.agh.soa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,6 +16,7 @@ public class Element implements Serializable {
     private Integer intValue2;
     private Integer powerValue;
     private ElementType elementTypesByTypeId;
+    @JsonIgnore
     private Category categoriesByCategoryId;
 
     @Id
@@ -93,6 +97,7 @@ public class Element implements Serializable {
         this.elementTypesByTypeId = elementTypesByTypeId;
     }
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     public Category getCategoriesByCategoryId() {
