@@ -58,6 +58,13 @@ public class ElementDAO {
         entityManager.getTransaction().commit();
     }
 
+    public Element getMostPowerfulElement(int typeId) {
+        Query query = entityManager.createNativeQuery(" select * from elements e where powerValue = (SELECT max(powerValue) from elements b where e.type_id=b.type_id group by type_id ) and e.type_id=:id",Element.class);
+        query.setParameter("id", typeId);
+        return (Element) query.getSingleResult();
+
+    }
+
 
     public void deleteElement(Element element) {
         entityManager.getTransaction().begin();

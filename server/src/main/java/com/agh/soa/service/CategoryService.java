@@ -4,12 +4,14 @@ import com.agh.soa.*;
 import com.agh.soa.dao.CategoryDAO;
 import com.agh.soa.dao.ElementDAO;
 import com.agh.soa.dao.UserDAO;
+import com.agh.soa.interceptor.MethodInterceptor;
 import remote.RemoteCategoryService;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -74,7 +76,9 @@ public class CategoryService implements RemoteCategoryService, Serializable {
         categoryDAO.create(category);
     }
 
+    @Interceptors(MethodInterceptor.class)
     public void createElement(Element element) {
+
         elementDAO.create(element);
     }
 
