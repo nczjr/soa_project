@@ -7,6 +7,7 @@ public interface RemoteCategoryService {
     List<CategoryType> getCategoryTypes();
     List<ElementType> getElementTypes();
     List getCategoriesByType(Integer typeId);
+    List getAllCategoriesByType(Integer typeId);
     List getElementsByCategoryId(Integer id);
     ElementType getElementTypeById(Integer id);
     void deleteCategory(Category category);

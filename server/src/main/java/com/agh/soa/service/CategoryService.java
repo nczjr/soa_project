@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import java.io.Serializable;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,12 +42,15 @@ public class CategoryService implements RemoteCategoryService, Serializable {
     }
 
     public List<Category> getCategoriesByType(Integer typeId) {
-        User user = getUserFromContext();
-        Role role = userDAO.getUserRole(user.getLogin());
-        return role.getRole().equals("Administrator") ? categoryDAO.findByCategoryType(typeId)
+        return  FacesContext.getCurrentInstance().getExternalContext().isUserInRole("Administrator") ?
+                categoryDAO.findByCategoryType(typeId)
                 : categoryDAO.findByCategoryType(typeId).stream()
-                                .filter(category -> category.getUser().getId() == user.getId())
+                                .filter(category -> category.getUser().getId() == getUserFromContext().getId())
                                 .collect(Collectors.toList());
+    }
+
+    public List<Category> getAllCategoriesByType(Integer typeId) {
+        return categoryDAO.findByCategoryType(typeId);
     }
 
     public List<Element> getElementsByCategoryId(Integer id) {
@@ -60,10 +62,9 @@ public class CategoryService implements RemoteCategoryService, Serializable {
     }
 
     public List<Element> getByElementType(Integer id) {
-        User user = getUserFromContext();
         return FacesContext.getCurrentInstance().getExternalContext().isUserInRole("Administrator") ?
                 elementDAO.findByElementType(id) : elementDAO.findByElementType(id).stream()
-                                                    .filter(element -> element.getCategoriesByCategoryId().getUser().getId() == user.getId())
+                                                    .filter(element -> element.getCategoriesByCategoryId().getUser().getId() == getUserFromContext().getId())
                                                     .collect(Collectors.toList());
     }
 

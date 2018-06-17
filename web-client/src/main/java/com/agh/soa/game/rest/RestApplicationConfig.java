@@ -1,4 +1,4 @@
-package com.agh.soa.rest;
+package com.agh.soa.game.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
