@@ -44,7 +44,7 @@ public class CatalogResource {
 
     @POST
     @Path("{typeId}/{categoryId}")
-    @Consumes("application/json")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createElement(@PathParam("typeId") Integer typeId, @PathParam("categoryId") Integer categoryId, Element element){
         element.setCategoriesByCategoryId(remoteCategoryService.getAllCategoriesByType(typeId)
                 .stream().filter( category -> category.getId() == categoryId).findAny().get());
