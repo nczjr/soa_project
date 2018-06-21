@@ -4,10 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @Table(name = "elements", schema = "projekt_soa", catalog = "")
 public class Element implements Serializable {
     private int id;
@@ -17,6 +23,7 @@ public class Element implements Serializable {
     private Integer powerValue;
     private ElementType elementTypesByTypeId;
     @JsonIgnore
+    @XmlTransient
     private Category categoriesByCategoryId;
 
     @Id
@@ -99,6 +106,7 @@ public class Element implements Serializable {
     }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @XmlTransient
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     public Category getCategoriesByCategoryId() {

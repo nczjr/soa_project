@@ -54,15 +54,11 @@ public class CatalogController implements Serializable {
         //return remoteCategoryService.getMostPowerfulElements();
     }
 
-    public void removeElement(Element element) throws IOException {
+    public void removeElement(Element element) {
         remoteCategoryService.deleteElement(element);
         fireElementEvent();
     }
 
-    public void reload() throws IOException {
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
-    }
 
     private void fireElementEvent() {
         ElementChangeEvent event = new ElementChangeEvent();

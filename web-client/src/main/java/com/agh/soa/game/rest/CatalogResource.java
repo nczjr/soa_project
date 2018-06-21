@@ -3,9 +3,11 @@ package com.agh.soa.game.rest;
 import com.agh.soa.Category;
 import com.agh.soa.CategoryType;
 import com.agh.soa.Element;
+import com.agh.soa.game.negotiator.ContentNegotiator;
 import remote.RemoteCategoryService;
 
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -13,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 @Path("/catalog")
 public class CatalogResource {
@@ -22,16 +25,20 @@ public class CatalogResource {
 
     @Path("{categoryId}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCategories(@PathParam("categoryId") Integer id, final @Context SecurityContext securityContext){
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<Category> getCategories(@Context HttpServletRequest request, @PathParam("categoryId") Integer id, final @Context SecurityContext securityContext){
+        List<Category> categories = remoteCategoryService.getAllCategoriesByType(id);
 //        List<Category> categories = securityContext.isUserInRole("Administrator") ?
 //        remoteCategoryService.getAllCategoriesByType(id) : Collections.emptyList();
 //        return categories.isEmpty() ? Response.status(403).build() : Response.status(200).entity(categories).build();
-        return Response.status(200).entity(remoteCategoryService.getAllCategoriesByType(id)).build();
+        Locale locale = request.getLocale();
+        if (locale.equals(Locale.FRENCH))
+            categories.forEach(ContentNegotiator::translate);
+        return categories;
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<CategoryType> getCategoryTypes(){
         return remoteCategoryService.getCategoryTypes();
     }

@@ -1,10 +1,12 @@
 package com.agh.soa;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@XmlRootElement
 @Table(name = "category_types", schema = "projekt_soa", catalog = "")
 @NamedQuery(name = "getCategoryTypes", query = "SELECT OBJECT (o) from CategoryType o")
 public class CategoryType implements Serializable {

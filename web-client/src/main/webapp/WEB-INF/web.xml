@@ -49,20 +49,7 @@
         <role-name>User</role-name>
     </auth-constraint>
 </security-constraint>
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>HtmlAuth</web-resource-name>
-            <description>zasady bezpieczeństwa aplikacji</description>
-            <url-pattern>/soa/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>Administrator</role-name>
-            <role-name>User</role-name>
 
-        </auth-constraint>
-    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>mysqldomain</realm-name>

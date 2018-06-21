@@ -1,10 +1,12 @@
 package com.agh.soa;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@XmlRootElement
 @Table(name = "users", schema = "projekt_soa", catalog = "")
 @NamedQuery(name = "findUserByLogin", query = "SELECT OBJECT (u) from User u where u.login=:login")
 public class User implements Serializable {

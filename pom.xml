@@ -13,6 +13,7 @@
         <module>server</module>
         <module>api</module>
         <module>web-client</module>
+        <module>soap</module>
     </modules>
 
     
