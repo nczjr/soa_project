@@ -13,6 +13,8 @@ public interface RemoteCategoryService {
     void deleteCategory(Category category);
     void deleteElement(Element element);
     void createCategory(Category category);
+    void createCategoryType(CategoryType categoryType);
+    void createElementType(ElementType elementType);
     void createElement(Element element);
     List<Element> getByElementType(Integer id);
     List<Element> getMostPowerfulElements();

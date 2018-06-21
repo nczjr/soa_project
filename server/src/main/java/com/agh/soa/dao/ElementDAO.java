@@ -65,6 +65,11 @@ public class ElementDAO {
         }
     }
 
+    public void createElementType(ElementType elementType) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(elementType);
+        entityManager.getTransaction().commit();
+    }
 
     public void deleteElement(Element element) {
         entityManager.getTransaction().begin();

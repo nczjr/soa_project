@@ -9,10 +9,7 @@ import remote.RemoteCategoryService;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -26,21 +23,23 @@ public class CatalogResource {
     @Path("{categoryId}")
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Category> getCategories(@Context HttpServletRequest request, @PathParam("categoryId") Integer id, final @Context SecurityContext securityContext){
-        List<Category> categories = remoteCategoryService.getAllCategoriesByType(id);
-//        List<Category> categories = securityContext.isUserInRole("Administrator") ?
-//        remoteCategoryService.getAllCategoriesByType(id) : Collections.emptyList();
-//        return categories.isEmpty() ? Response.status(403).build() : Response.status(200).entity(categories).build();
+    public Response getCategories(@Context HttpServletRequest request, @PathParam("categoryId") Integer id, final @Context SecurityContext securityContext){
+        List<Category> categories = securityContext.isUserInRole("Administrator") ?
+        remoteCategoryService.getAllCategoriesByType(id) : Collections.emptyList();
         Locale locale = request.getLocale();
-        if (locale.equals(Locale.FRENCH))
+        if (locale.equals(Locale.FRENCH)) {
             categories.forEach(ContentNegotiator::translate);
-        return categories;
+        }
+        GenericEntity<List<Category>> entity = new GenericEntity<List<Category>>(categories){};
+        return categories.isEmpty() ? Response.status(403).build() : Response.status(200).entity(entity).build();
     }
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<CategoryType> getCategoryTypes(){
-        return remoteCategoryService.getCategoryTypes();
+    public Response getCategoryTypes(){
+        List<CategoryType> types = remoteCategoryService.getCategoryTypes();
+        GenericEntity<List<CategoryType>> entity = new GenericEntity<List<CategoryType>>(types){};
+        return Response.ok().entity(entity).build();
     }
 
     @POST

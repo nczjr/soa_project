@@ -40,6 +40,12 @@ public class CategoryDAO implements Serializable {
         entityManager.getTransaction().commit();
     }
 
+    public void createCategoryType(CategoryType obj) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(obj);
+        entityManager.getTransaction().commit();
+    }
+
 
     public void deleteCategory(Category category) {
         entityManager.getTransaction().begin();

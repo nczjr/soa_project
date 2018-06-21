@@ -83,6 +83,14 @@ public class CategoryService implements RemoteCategoryService, Serializable {
         elementDAO.create(element);
     }
 
+    public void createCategoryType(CategoryType categoryType) {
+        categoryDAO.createCategoryType(categoryType);
+    }
+
+    public void createElementType(ElementType elementType) {
+        elementDAO.createElementType(elementType);
+    }
+
     public void deleteCategory(Category category) {
         categoryDAO.deleteCategory(category);
     }

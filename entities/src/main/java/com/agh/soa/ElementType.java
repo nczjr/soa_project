@@ -15,6 +15,7 @@ public class ElementType implements Serializable {
     private String intLabel2;
     private String nameLabel;
     private String powerLabel;
+    private int categoryTypeId;
 
     @Id
     @Column(name = "id")
@@ -74,6 +75,16 @@ public class ElementType implements Serializable {
 
     public void setPowerLabel(String powerLabel) {
         this.powerLabel = powerLabel;
+    }
+
+    @Basic
+    @Column(name = "category_type_id")
+    public int getCategoryTypeId() {
+        return categoryTypeId;
+    }
+
+    public void setCategoryTypeId(int categoryTypeId) {
+        this.categoryTypeId = categoryTypeId;
     }
 
     @Override

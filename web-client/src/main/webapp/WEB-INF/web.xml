@@ -39,7 +39,7 @@
     <web-resource-collection>
         <web-resource-name>HtmlAuth</web-resource-name>
         <description>zasady bezpieczeństwa aplikacji</description>
-        <url-pattern>/game/*</url-pattern>
+        <url-pattern>/*</url-pattern>
         <http-method>GET</http-method>
         <http-method>POST</http-method>
     </web-resource-collection>
@@ -48,15 +48,11 @@
         <role-name>Administrator</role-name>
         <role-name>User</role-name>
     </auth-constraint>
-</security-constraint>
+    </security-constraint>
 
     <login-config>
-        <auth-method>FORM</auth-method>
+        <auth-method>BASIC</auth-method>
         <realm-name>mysqldomain</realm-name>
-        <form-login-config>
-            <form-login-page>/login/login.xhtml</form-login-page>
-            <form-error-page>/login/error.xhtml</form-error-page>
-        </form-login-config>
 
     </login-config>
     <security-role>
@@ -70,10 +66,6 @@
     <filter>
         <filter-name>Filter</filter-name>
         <filter-class>com.agh.soa.game.filter.LogFilter</filter-class>
-        <init-param>
-            <param-name>allowedDomain</param-name>
-            <param-value>index.xhtml</param-value>
-        </init-param>
     </filter>
 
     <filter-mapping>
