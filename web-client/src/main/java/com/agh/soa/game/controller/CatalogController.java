@@ -1,6 +1,8 @@
 package com.agh.soa.game.controller;
 
-import com.agh.soa.*;
+import com.agh.soa.Category;
+import com.agh.soa.CategoryType;
+import com.agh.soa.Element;
 import com.agh.soa.game.event.ElementChangeEvent;
 import org.primefaces.push.EventBusFactory;
 import remote.RemoteCategoryService;
@@ -11,11 +13,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
