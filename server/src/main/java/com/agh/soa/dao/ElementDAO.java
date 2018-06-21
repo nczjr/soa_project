@@ -4,22 +4,19 @@ import com.agh.soa.Element;
 import com.agh.soa.ElementType;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.util.List;
 
 @Named
 @ApplicationScoped
 public class ElementDAO {
 
+    @Inject
     EntityManager entityManager;
 
     public ElementDAO() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("Projekt");
-        entityManager = factory.createEntityManager();
     }
 
     public List<Element> findByCategoryId(int id) {
@@ -59,16 +56,20 @@ public class ElementDAO {
     }
 
     public Element getMostPowerfulElement(int typeId) {
-        Query query = entityManager.createNativeQuery(" select * from elements e where powerValue = (SELECT max(powerValue) from elements b where e.type_id=b.type_id group by type_id ) and e.type_id=:id",Element.class);
-        query.setParameter("id", typeId);
-        return (Element) query.getSingleResult();
-
+        try {
+            Query query = entityManager.createNativeQuery(" select * from elements e where powerValue = (SELECT max(powerValue) from elements b where e.type_id=b.type_id group by type_id ) and e.type_id=:id",Element.class);
+            query.setParameter("id", typeId);
+            return query.getResultList().size() > 1 ? (Element) query.getResultList().get(0) : (Element) query.getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
     }
 
 
     public void deleteElement(Element element) {
         entityManager.getTransaction().begin();
-        entityManager.remove(entityManager.contains(element) ? element : entityManager.merge(element));
+        entityManager.createQuery("DELETE Element e where e.id=:id").setParameter("id",element.getId()).executeUpdate();
+//        entityManager.remove(entityManager.contains(element) ? element : entityManager.merge(element));
         entityManager.getTransaction().commit();
     }
 

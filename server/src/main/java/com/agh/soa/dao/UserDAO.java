@@ -4,11 +4,9 @@ import com.agh.soa.Role;
 import com.agh.soa.User;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -18,11 +16,11 @@ import java.util.List;
 @ApplicationScoped
 public class UserDAO {
 
+
+    @Inject
     EntityManager entityManager;
 
     public UserDAO() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("Projekt");
-        entityManager = factory.createEntityManager();
     }
 
     public User getUserByLogin(String login) {

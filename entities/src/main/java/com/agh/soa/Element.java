@@ -88,6 +88,7 @@ public class Element implements Serializable {
     }
 
     @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     public ElementType getElementTypesByTypeId() {
         return elementTypesByTypeId;

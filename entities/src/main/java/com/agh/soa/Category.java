@@ -72,7 +72,7 @@ public class Category implements Serializable {
         this.user = user;
     }
 
-    @OneToMany(mappedBy = "categoriesByCategoryId", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "categoriesByCategoryId", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public List<Element> getElementsByCategoryId() {
         return elementsByCategoryId;
     }

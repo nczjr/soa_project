@@ -5,11 +5,9 @@ import com.agh.soa.CategoryType;
 import com.agh.soa.User;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,12 +15,11 @@ import java.util.List;
 @ApplicationScoped
 public class CategoryDAO implements Serializable {
 
+    @Inject
     private EntityManager entityManager;
 
 
     public CategoryDAO() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("Projekt");
-        entityManager = factory.createEntityManager();
     }
 
     public List<CategoryType> findCategoryTypes() {

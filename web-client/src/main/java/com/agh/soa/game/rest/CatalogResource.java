@@ -24,9 +24,10 @@ public class CatalogResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCategories(@PathParam("categoryId") Integer id, final @Context SecurityContext securityContext){
-        List<Category> categories = securityContext.isUserInRole("Administrator") ?
-        remoteCategoryService.getAllCategoriesByType(id) : Collections.emptyList();
-        return categories.isEmpty() ? Response.status(403).build() : Response.status(200).entity(categories).build();
+//        List<Category> categories = securityContext.isUserInRole("Administrator") ?
+//        remoteCategoryService.getAllCategoriesByType(id) : Collections.emptyList();
+//        return categories.isEmpty() ? Response.status(403).build() : Response.status(200).entity(categories).build();
+        return Response.status(200).entity(remoteCategoryService.getAllCategoriesByType(id)).build();
     }
 
     @GET
@@ -36,10 +37,13 @@ public class CatalogResource {
     }
 
     @POST
+    @Path("{typeId}/{categoryId}")
     @Consumes("application/json")
-    public Response createElement(Element element){
+    public Response createElement(@PathParam("typeId") Integer typeId, @PathParam("categoryId") Integer categoryId, Element element){
+        element.setCategoriesByCategoryId(remoteCategoryService.getAllCategoriesByType(typeId)
+                .stream().filter( category -> category.getId() == categoryId).findAny().get());
+        element.setElementTypesByTypeId(remoteCategoryService.getElementTypeById(typeId));
         remoteCategoryService.createElement(element);
-        String result = "Element added " + element;
-        return Response.status(201).entity(result).build();
+        return Response.status(201).entity(element).build();
     }
 }

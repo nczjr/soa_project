@@ -17,7 +17,7 @@ public class MethodInterceptor {
     public Object interceptorMethod(InvocationContext ictx) throws Exception{
         Element element = (Element) ictx.getParameters()[0];
         Element powerfulElement = elementDAO.getMostPowerfulElement(element.getElementTypesByTypeId().getId());
-        if (element.getPowerValue()> powerfulElement.getPowerValue()) {
+        if (powerfulElement != null && element.getPowerValue()> powerfulElement.getPowerValue()) {
             element.setPowerValue(powerfulElement.getPowerValue());
         }
         ictx.proceed();
