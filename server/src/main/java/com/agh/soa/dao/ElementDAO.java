@@ -43,6 +43,12 @@ public class ElementDAO {
 
     }
 
+    public void editElementField(Element element) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(element);
+        entityManager.getTransaction().commit();
+    }
+
     public void create(Element element) {
         entityManager.getTransaction().begin();
         entityManager.persist(element);

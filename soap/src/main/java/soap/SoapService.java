@@ -1,11 +1,9 @@
 package soap;
 
-import com.agh.soa.Category;
 import com.agh.soa.CategoryType;
 import com.agh.soa.Element;
 import com.agh.soa.ElementType;
 import remote.RemoteCategoryService;
-import soap.Service;
 
 import javax.ejb.EJB;
 import javax.jws.WebMethod;
@@ -28,4 +26,13 @@ public class SoapService implements Service {
     public void createElementType(ElementType elementType) {
         remoteCategoryService.createElementType(elementType);
     }
+
+    @Override
+    @WebMethod
+    public void editElement(Element element) {
+//        remoteCategoryService.editElementField(element);
+    }
+
+
+
 }

@@ -1,6 +1,7 @@
 package soap;
 
 import com.agh.soa.CategoryType;
+import com.agh.soa.Element;
 import com.agh.soa.ElementType;
 
 import javax.jws.WebMethod;
@@ -15,5 +16,6 @@ public interface Service {
     @WebMethod
     void createElementType(ElementType elementType);
 
-
+    @WebMethod
+    void editElement(Element element);
 }

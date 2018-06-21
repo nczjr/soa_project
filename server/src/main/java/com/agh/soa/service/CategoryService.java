@@ -107,6 +107,10 @@ public class CategoryService implements RemoteCategoryService, Serializable {
         elementDAO.edit(element);
     }
 
+    public void editElementField(Element element) {
+        //elementDAO
+    }
+
     private User getUserFromContext() {
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         String login = principal.getName();
