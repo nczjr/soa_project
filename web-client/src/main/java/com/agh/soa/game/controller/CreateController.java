@@ -1,6 +1,9 @@
 package com.agh.soa.game.controller;
 
-import com.agh.soa.*;
+import com.agh.soa.Category;
+import com.agh.soa.CategoryType;
+import com.agh.soa.Element;
+import com.agh.soa.ElementType;
 import com.agh.soa.game.event.ElementChangeEvent;
 import remote.RemoteCategoryService;
 
@@ -10,12 +13,9 @@ import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.event.Event;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -145,14 +145,6 @@ public class CreateController implements Serializable {
 
     public boolean isCreateMode() {
         return "create".equals(mode);
-    }
-
-    public void redirect() {
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("create.xhtml?faces-redirect=true&amp;mode=edit");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void fireElementEvent() {

@@ -30,7 +30,7 @@ public class SoapService implements Service {
     @Override
     @WebMethod
     public void editElement(Element element) {
-//        remoteCategoryService.editElementField(element);
+        remoteCategoryService.editElementField(element.getId(), element.getIntValue1());
     }
 
 

@@ -43,6 +43,12 @@ public class ElementDAO {
 
     }
 
+    public Element findElementById(int id) {
+        Query query = entityManager.createQuery("FROM Element e where  e.id=:id");
+        query.setParameter("id", id);
+        return (Element) query.getSingleResult();
+    }
+
     public void editElementField(Element element) {
         entityManager.getTransaction().begin();
         entityManager.merge(element);

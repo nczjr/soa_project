@@ -20,6 +20,7 @@ public interface RemoteCategoryService {
     List<Element> getMostPowerfulElements();
     void editCategory(Category category);
     void editElement(Element element);
+    void editElementField(int elementId, int value);
     void changePassword(User user, String oldPassword,String newPassword);
     List<User> getUsers();
 }

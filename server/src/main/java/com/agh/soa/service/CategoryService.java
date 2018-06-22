@@ -79,7 +79,6 @@ public class CategoryService implements RemoteCategoryService, Serializable {
 
     @Interceptors(MethodInterceptor.class)
     public void createElement(Element element) {
-
         elementDAO.create(element);
     }
 
@@ -107,8 +106,10 @@ public class CategoryService implements RemoteCategoryService, Serializable {
         elementDAO.edit(element);
     }
 
-    public void editElementField(Element element) {
-        //elementDAO
+    public void editElementField(int elementId, int value) {
+        Element el = elementDAO.findElementById(elementId);
+        el.setIntValue1(value);
+        elementDAO.edit(el);
     }
 
     private User getUserFromContext() {
